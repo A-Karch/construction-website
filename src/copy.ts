@@ -24,7 +24,6 @@ type Copy = {
   section: { services: string; works: string; about: string; process: string; contact: string };
   serviceNote: string;
   scope: string;
-  projectNote: string;
   demo: string;
   empty: string;
   before: string;
@@ -80,7 +79,6 @@ export const copy: Localized<Copy> = {
     section: { services: 'MIDA TEEME', works: 'ENNE JA PÄRAST', about: 'MEIE LÄHENEMINE', process: 'TÖÖDE KÄIK', contact: 'VÕTA ÜHENDUST' },
     serviceNote: 'Teenuste nimekiri on esialgne.',
     scope: 'Mida töö võib hõlmata',
-    projectNote: 'Näidisprojektide enne ja pärast pildid on loodud tehisintellektiga.',
     demo: 'NÄIDISPROJEKT',
     empty: 'Projektide fotod lisatakse hiljem.',
     before: 'Enne',
@@ -151,7 +149,6 @@ export const copy: Localized<Copy> = {
     section: { services: 'ЧЕМ ЗАНИМАЕМСЯ', works: 'ДО И ПОСЛЕ', about: 'НАШ ПОДХОД', process: 'ЭТАПЫ РАБОТЫ', contact: 'СВЯЖИТЕСЬ С НАМИ' },
     serviceNote: 'Предварительный перечень услуг.',
     scope: 'Что может входить в работы',
-    projectNote: 'Изображения «до и после» в примерах проектов созданы с помощью ИИ.',
     demo: 'ПРИМЕР ПРОЕКТА',
     empty: 'Фотографии объектов появятся позже.',
     before: 'До',
@@ -222,7 +219,6 @@ export const copy: Localized<Copy> = {
     section: { services: 'WHAT WE DO', works: 'BEFORE & AFTER', about: 'OUR APPROACH', process: 'THE PROCESS', contact: 'GET IN TOUCH' },
     serviceNote: 'Provisional list of services.',
     scope: 'What the work may include',
-    projectNote: 'The before and after images in these project examples were generated with AI.',
     demo: 'ILLUSTRATIVE PROJECT',
     empty: 'Project photos will be added later.',
     before: 'Before',

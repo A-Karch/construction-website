@@ -232,7 +232,7 @@ function Home({ ctx }: { ctx: Context }) {
     <Approach ctx={ctx} />
     <section className="section gallery-section">
       <div className="wrap">
-        <SectionHeading label={t.section.works} title={t.pages.works[1]} intro={projects.some((project) => project.demo) ? t.projectNote : undefined}
+        <SectionHeading label={t.section.works} title={t.pages.works[1]}
           action={<a className="text-link" href={ctx.url('works')}>{t.allWorks}<ArrowUpRight size={17} /></a>} />
         <Gallery ctx={ctx} />
       </div>
@@ -291,7 +291,7 @@ function PageBody({ ctx }: { ctx: Context }) {
       {company.preview && <p className="provisional">{t.serviceNote}</p>}<Services ctx={ctx} />
     </section>}
     {route === 'works' && <section className="section wrap" aria-label={t.section.works}>
-      {projects.some((project) => project.demo) && <p className="provisional">{t.projectNote}</p>}<Gallery ctx={ctx} portfolio />
+      <Gallery ctx={ctx} portfolio />
     </section>}
     {route === 'about' && <>
       {company.contactPerson[ctx.lang] && <section className="wrap profile">
