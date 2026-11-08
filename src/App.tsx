@@ -50,8 +50,7 @@ function Header({ ctx, base }: { ctx: Context; base: string }) {
             {languages.map((language) => <a key={language} lang={language} hrefLang={language} href={base + routePath(language, route)}
               aria-label={language.toUpperCase() + ' · ' + languageNames[language]} aria-current={language === lang ? 'page' : undefined}>{language.toUpperCase()}</a>)}
           </nav>
-          {phone ? <a className="header-phone" href={phone} aria-label={t.call + ' ' + company.phone}><Phone size={16} />{company.phone}</a>
-            : <span className="header-phone" title={t.details[0]}><Phone size={16} />{t.pending}</span>}
+          {phone && <a className="header-phone" href={phone} aria-label={t.call + ' ' + company.phone}><Phone size={16} />{company.phone}</a>}
           <a className="btn btn-small header-quote" href={ctx.url('contact') + '#quote'}>{t.quote}<ArrowUpRight size={16} /></a>
           <details className="mobile-menu">
             <summary aria-label={t.menu}><Menu size={23} /></summary>
@@ -87,22 +86,28 @@ function Services({ ctx }: { ctx: Context }) {
   </div>;
 }
 
-function Gallery({ ctx }: { ctx: Context }) {
+function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean }) {
   const { t } = ctx;
   if (!projects.length) return <p className="muted">{t.empty}</p>;
-  return <div className="project-grid">
-    {projects.map((project) => {
+  return <div className={portfolio ? 'project-grid portfolio-grid' : 'project-grid'}>
+    {projects.map((project, index) => {
       const text = project.text[ctx.lang];
-      return <article className="project-card" key={project.id}>
+      const height = project.imageHeight ?? 512;
+      return <article className={portfolio && index === 0 ? 'project-card project-featured' : 'project-card'} key={project.id}>
         <div className="project-pair">
-          <figure><img src={ctx.media(project.before)} alt={text.beforeAlt} width="768" height="512" loading="lazy" decoding="async" /><figcaption>{t.before}</figcaption></figure>
-          <figure><img src={ctx.media(project.after)} alt={text.afterAlt} width="768" height="512" loading="lazy" decoding="async" /><figcaption>{t.after}</figcaption></figure>
+          <figure><img src={ctx.media(project.before)} alt={text.beforeAlt} width="768" height={height} loading="lazy" decoding="async" /><figcaption>{t.before}</figcaption></figure>
+          <figure><img src={ctx.media(project.after)} alt={text.afterAlt} width="768" height={height} loading="lazy" decoding="async" /><figcaption>{t.after}</figcaption></figure>
         </div>
         <div className="project-copy">
-          <p className="project-type">{text.category}{project.demo && <span>{t.demo}</span>}</p>
-          <h3>{text.title}</h3>
-          <p>{text.description}</p>
-          <p className="project-place"><MapPin size={15} />{project.location || t.noLocation}</p>
+          <div>
+            <p className="project-type">{text.category}{project.demo && <span>{t.demo}</span>}</p>
+            {portfolio ? <h2>{text.title}</h2> : <h3>{text.title}</h3>}
+          </div>
+          <div>
+            <p>{text.description}</p>
+            {text.scope?.length ? <ul className="project-scope">{text.scope.map((item) => <li key={item}>{item}</li>)}</ul> : null}
+            {project.location && <p className="project-place"><MapPin size={15} />{project.location}</p>}
+          </div>
         </div>
       </article>;
     })}
@@ -141,8 +146,9 @@ function Details({ ctx, compact = false }: { ctx: Context; compact?: boolean }) 
     company.registrationNumber,
   ];
   return <dl className="business-details">
-    {ctx.t.details.map((name, i) => compact && i === 2 ? null :
-      <div key={name}><dt>{name}</dt><dd>{values[i] || ctx.t.pending}</dd></div>)}
+    {company.contactPerson[ctx.lang] && <div><dt>{ctx.t.contactPerson}</dt><dd>{company.contactPerson[ctx.lang]}</dd></div>}
+    {ctx.t.details.map((name, i) => values[i] && !(compact && i === 2) ?
+      <div key={name}><dt>{name}</dt><dd>{values[i]}</dd></div> : null)}
   </dl>;
 }
 
@@ -208,7 +214,7 @@ function Home({ ctx }: { ctx: Context }) {
         <div className="hero-actions">
           <a className="btn" href={ctx.url('contact') + '#quote'}>{t.quote}<ArrowUpRight size={19} /></a>
           {phone ? <a className="btn btn-outline" href={phone}><Phone size={17} />{t.call}</a>
-            : <span className="btn btn-outline call-unavailable" aria-disabled="true" title={t.details[0] + ' · ' + t.pending}><Phone size={17} />{t.call}<span className="sr-only"> · {t.pending}</span></span>}
+            : <a className="btn btn-outline" href={ctx.url('works')}>{t.allWorks}<ArrowRight size={17} /></a>}
         </div>
       </div>
       <div className="wrap hero-foot">
@@ -280,14 +286,20 @@ function PageBody({ ctx }: { ctx: Context }) {
   </div>;
   const label = route === 'privacy' ? t.sector : t.section[route];
   return <>
-    <PageHeading ctx={ctx} label={label} title={title} description={route === 'services' ? t.overview : description} />
+    <PageHeading ctx={ctx} label={route === 'about' ? title : label} title={route === 'about' ? company.name || title : title} description={route === 'services' ? t.overview : description} />
     {route === 'services' && <section className="section wrap" aria-label={t.allServices}>
       {company.preview && <p className="provisional">{t.serviceNote}</p>}<Services ctx={ctx} />
     </section>}
     {route === 'works' && <section className="section wrap" aria-label={t.section.works}>
-      {projects.some((project) => project.demo) && <p className="provisional">{t.projectNote}</p>}<Gallery ctx={ctx} />
+      {projects.some((project) => project.demo) && <p className="provisional">{t.projectNote}</p>}<Gallery ctx={ctx} portfolio />
     </section>}
-    {route === 'about' && <><Approach ctx={ctx} /><Process ctx={ctx} /></>}
+    {route === 'about' && <>
+      {company.contactPerson[ctx.lang] && <section className="wrap profile">
+        <div><p className="kicker">{t.contactPerson}</p><h2>{company.contactPerson[ctx.lang]}</h2></div>
+        <a className="text-link" href={ctx.url('contact')}>{t.section.contact}<ArrowUpRight size={17} /></a>
+      </section>}
+      <Approach ctx={ctx} /><Process ctx={ctx} />
+    </>}
     {route === 'privacy' && <div className="section wrap privacy">
       {company.preview && <p className="form-note"><Info size={18} />{t.privacyDraft}</p>}
       {(company.privacyPolicy?.[ctx.lang] ?? t.policy).map(([heading, paragraph]) => <section key={heading}><h2>{heading}</h2><p>{paragraph}</p></section>)}
@@ -300,7 +312,7 @@ function Footer({ ctx }: { ctx: Context }) {
   const { t } = ctx;
   return <footer className="footer">
     <div className="wrap footer-grid">
-      <div><Brand ctx={ctx} /><p>{company.preview ? t.previewText : t.homeHero[1]}</p>
+      <div><Brand ctx={ctx} /><p>{t.pages.about[2]}</p>
         {company.socialLinks.length > 0 && <ul className="social-links">{company.socialLinks.map(({ label, url }) =>
           <li key={url}><a href={url}>{label}<ArrowUpRight size={15} /></a></li>)}</ul>}
       </div>

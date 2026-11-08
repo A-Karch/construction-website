@@ -9,9 +9,9 @@ export const projects = company.projects.filter((project) => company.preview || 
 export const pages: Page[] = ['home', 'services', 'works', 'about', 'contact', 'privacy', 'missing'];
 export const navigation = ['home', 'services', 'works', 'about', 'contact'] as const;
 export const navLabels = {
-  et: ['Avaleht', 'Teenused', 'Meie tööd', 'Meist', 'Kontakt'],
-  ru: ['Главная', 'Услуги', 'Наши работы', 'О компании', 'Контакты'],
-  en: ['Home', 'Services', 'Our work', 'About us', 'Contact'],
+  et: ['Avaleht', 'Teenused', 'Projektid', 'Meist', 'Kontakt'],
+  ru: ['Главная', 'Услуги', 'Портфолио', 'О компании', 'Контакты'],
+  en: ['Home', 'Services', 'Portfolio', 'About us', 'Contact'],
 };
 export const languageNames = { et: 'Eesti', ru: 'Русский', en: 'English' };
 

@@ -20,8 +20,9 @@ type Project = {
   demo: boolean;
   before: string;
   after: string;
+  imageHeight?: number;
   location: string;
-  text: Localized<{ title: string; category: string; description: string; beforeAlt: string; afterAlt: string }>;
+  text: Localized<{ title: string; category: string; description: string; beforeAlt: string; afterAlt: string; scope?: string[] }>;
 };
 
 const services: Service[] = [
@@ -122,19 +123,27 @@ const services: Service[] = [
 
 const projects: Project[] = [
   {
+    id: 'rendered-facade', demo: true, before: 'rendered-facade-before.webp', after: 'rendered-facade-after.webp', imageHeight: 768, location: '',
+    text: {
+      et: { title: 'Kivimaja soojustatud fassaad', category: 'Soojustus ja krohv', description: 'Krohvikatte uuendamise näide, kus soojustus ja hele viimistlus jätavad alles maja tumeda katuse ning olemasoleva aknajaotuse.', beforeAlt: 'Kulunud halli krohviga kahekorruseline kivimaja', afterAlt: 'Sama kivimaja heleda viimistluskrohvi ja tumeda sokliga', scope: ['Soojustusplaadid', 'Armeeritud aluskrohv', 'Viimistluskrohv'] },
+      ru: { title: 'Мокрый фасад каменного дома', category: 'Утепление и штукатурка', description: 'Пример наружного утепления со светлой декоративной штукатуркой и тёмным цоколем. Кровля и расположение окон остаются прежними.', beforeAlt: 'Двухэтажный каменный дом со старой серой штукатуркой', afterAlt: 'Тот же дом со светлой декоративной штукатуркой и тёмным цоколем', scope: ['Монтаж утеплителя', 'Армирование сеткой', 'Декоративная штукатурка'] },
+      en: { title: 'Rendered insulation for a masonry home', category: 'Insulation and render', description: 'An example of external wall insulation with light decorative render and a dark plinth. The roof and window layout stay as they were.', beforeAlt: 'Two-storey masonry house with weathered grey render', afterAlt: 'The same house with light decorative render and a dark plinth', scope: ['Insulation boards', 'Reinforced base coat', 'Decorative render'] },
+    },
+  },
+  {
     id: 'apartment', demo: true, before: 'apartment-before.webp', after: 'apartment-after.webp', location: '',
     text: {
-      et: { title: 'Valgusküllane korter', category: 'Korteri remont', description: 'Näide, kuidas taastatud seinad ja tammeparkett muudavad vana elutoa ilmet.', beforeAlt: 'Krohvimata seinte ja palja põrandaga elutuba', afterAlt: 'Tammeparketi ja heleda seinaviimistlusega elutuba' },
-      ru: { title: 'Светлая квартира', category: 'Ремонт квартиры', description: 'Пример того, как восстановленные стены и дубовый паркет меняют интерьер старой гостиной.', beforeAlt: 'Гостиная с необработанными стенами и черновым полом', afterAlt: 'Гостиная с дубовым паркетом и светлыми стенами' },
-      en: { title: 'A light-filled apartment', category: 'Apartment renovation', description: 'An example of how restored walls and oak parquet can transform an older living room.', beforeAlt: 'Living room with unfinished walls and bare floor', afterAlt: 'Living room with oak parquet and light walls' },
+      et: { title: 'Valgusküllane korter', category: 'Korteri remont', description: 'Näide, kuidas taastatud seinad ja tammeparkett muudavad vana elutoa ilmet.', beforeAlt: 'Krohvimata seinte ja palja põrandaga elutuba', afterAlt: 'Tammeparketi ja heleda seinaviimistlusega elutuba', scope: ['Seinte ettevalmistus', 'Siseviimistlus', 'Parkett'] },
+      ru: { title: 'Светлая квартира', category: 'Ремонт квартиры', description: 'Пример того, как восстановленные стены и дубовый паркет меняют интерьер старой гостиной.', beforeAlt: 'Гостиная с необработанными стенами и черновым полом', afterAlt: 'Гостиная с дубовым паркетом и светлыми стенами', scope: ['Подготовка стен', 'Чистовая отделка', 'Укладка паркета'] },
+      en: { title: 'A light-filled apartment', category: 'Apartment renovation', description: 'An example of how restored walls and oak parquet can transform an older living room.', beforeAlt: 'Living room with unfinished walls and bare floor', afterAlt: 'Living room with oak parquet and light walls', scope: ['Wall preparation', 'Interior finishing', 'Parquet flooring'] },
     },
   },
   {
     id: 'house', demo: true, before: 'house-before.webp', after: 'house-after.webp', location: '',
     text: {
-      et: { title: 'Puitmaja uus ilme', category: 'Fassaad ja katus', description: 'Näide puitfassaadi ja katuse uuendamisest, mis säilitab maja algse mahu.', beforeAlt: 'Kulunud laudise ja katusega puitmaja', afterAlt: 'Uue puitvoodri ja tumeda valtskatusega maja' },
-      ru: { title: 'Новый облик деревянного дома', category: 'Фасад и кровля', description: 'Пример обновления деревянного фасада и кровли с сохранением объёма дома.', beforeAlt: 'Деревянный дом с изношенной обшивкой и кровлей', afterAlt: 'Дом с новой деревянной обшивкой и тёмной фальцевой кровлей' },
-      en: { title: 'A timber house renewed', category: 'Façade and roof', description: 'A façade and roof update that retains the original shape of the timber house.', beforeAlt: 'Timber house with weathered cladding and roof', afterAlt: 'House with renewed timber cladding and a dark standing-seam roof' },
+      et: { title: 'Puitmaja uus ilme', category: 'Fassaad ja katus', description: 'Näide puitfassaadi ja katuse uuendamisest, mis säilitab maja algse mahu.', beforeAlt: 'Kulunud laudise ja katusega puitmaja', afterAlt: 'Uue puitvoodri ja tumeda valtskatusega maja', scope: ['Puitvooder', 'Valtskatus', 'Aknaümbrused'] },
+      ru: { title: 'Новый облик деревянного дома', category: 'Фасад и кровля', description: 'Пример обновления деревянного фасада и кровли с сохранением объёма дома.', beforeAlt: 'Деревянный дом с изношенной обшивкой и кровлей', afterAlt: 'Дом с новой деревянной обшивкой и тёмной фальцевой кровлей', scope: ['Деревянная обшивка', 'Фальцевая кровля', 'Отделка оконных проёмов'] },
+      en: { title: 'A timber house renewed', category: 'Façade and roof', description: 'A façade and roof update that retains the original shape of the timber house.', beforeAlt: 'Timber house with weathered cladding and roof', afterAlt: 'House with renewed timber cladding and a dark standing-seam roof', scope: ['Timber cladding', 'Standing-seam roof', 'Window surrounds'] },
     },
   },
 ];
@@ -142,8 +151,9 @@ const projects: Project[] = [
 // Set preview to false only after reviewing the launch checklist.
 export const company = {
   preview: true,
-  name: '',
-  logo: '',
+  name: 'BOIKU Ehitus',
+  logo: 'boiku-mark.svg',
+  contactPerson: { et: 'Silvestr Boiku', ru: 'Сильвестр Бойку', en: 'Silvestr Boiku' } as Localized,
   phone: '',
   email: '',
   address: '',
