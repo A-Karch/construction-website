@@ -165,7 +165,9 @@ span.header-phone { color: var(--muted); }
 .detail-copy .form-note { margin: 0 0 1rem; width: fit-content; }
 .detail-copy h2, .privacy h2 { font-size: clamp(1.45rem, 2.55vw, 2.35rem); margin-top: 1.65rem; }
 .detail-copy ul { display: grid; gap: .8rem; margin-block: 1.1rem 1.65rem; }
-.detail-copy li { display: flex; gap: .5rem; }
+.detail-copy ul li { display: flex; gap: .5rem; }
+.detail-copy ol { display: grid; gap: .8rem; list-style: decimal; padding-inline-start: 1.5rem; margin-block: 1.1rem 1.65rem; }
+.detail-copy ol li::marker { color: var(--amber-dark); font-weight: 750; }
 .detail-copy li svg { color: var(--amber-dark); }
 .detail-aside { background: var(--white); border: 1px solid var(--line); border-radius: .4rem; padding: 1.15rem; }
 .detail-aside h2 { font-size: 1.35rem; margin-bottom: .7rem; }

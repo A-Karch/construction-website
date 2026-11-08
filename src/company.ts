@@ -8,6 +8,7 @@ type ServiceText = {
   summary: string;
   intro: string;
   scope: string[];
+  additionalScope?: { title: string; steps: string[] };
 };
 export type Service = {
   id: string;
@@ -51,9 +52,54 @@ const services: Service[] = [
   {
     id: 'facade', confirmed: false,
     text: {
-      et: { slug: 'fassaaditood', title: 'Fassaaditööd', summary: 'Välisviimistluse taastamine ja fassaadi lahenduste uuendamine.', intro: 'Fassaadi uuendamine algab olemasoleva katte ja niiskusjälgede ülevaatusega. Sobiv lahendus sõltub seina ehitusest ning räästa, sokli ja aknaümbruste seisukorrast.', scope: ['Olemasoleva välisviimistluse hindamine', 'Voodri parandamine või vahetamine vastavalt lahendusele', 'Aknaümbruste ja sokli liitekohtade viimistlemine'] },
-      ru: { slug: 'fasadnie-raboty', title: 'Фасадные работы', summary: 'Восстановление наружной отделки и обновление фасада.', intro: 'Перед обновлением фасада осматривают облицовку и следы влаги. Выбор решения зависит от устройства стены и состояния карнизов, цоколя и примыканий к окнам.', scope: ['Оценка существующей наружной отделки', 'Ремонт или замена облицовки по проекту', 'Отделка примыканий к окнам и цоколю'] },
-      en: { slug: 'facade-work', title: 'Façade work', summary: 'Restoring external finishes and updating façade details.', intro: 'A façade update starts with an inspection of the existing cladding and signs of moisture. The right approach depends on the wall assembly and the condition of eaves, plinths and window surrounds.', scope: ['Assessing the existing exterior finish', 'Repairing or replacing cladding as specified', 'Finishing window and plinth junctions'] },
+      et: {
+        slug: 'fassaaditood',
+        title: 'Fassaaditööd',
+        summary: 'Fassaadi uuendamine ja soojustamine krohvitud soojusisolatsiooni liitsüsteemiga (SILS).',
+        intro: 'Fassaadi uuendamisel hinnatakse olemasolevat välisviimistlust ja aluspinna seisukorda. Krohvitud soojusisolatsiooni liitsüsteemi puhul kinnitatakse soojustus välisseinale ja kaetakse armeeritud krohvikihiga. Lahendus valitakse seina ehituse ning sokli ja aknaümbruste seisukorra järgi.',
+        scope: ['Olemasoleva välisviimistluse hindamine', 'Voodri parandamine või vahetamine vastavalt lahendusele', 'Aknaümbruste ja sokli liitekohtade viimistlemine'],
+        additionalScope: {
+          title: 'Krohvitud soojustussüsteemi tööetapid',
+          steps: [
+            'Aluspinna ettevalmistamine ning sokli ja aknaümbruste liitekohtade läbivaatamine',
+            'Soojustusplaatide paigaldamine valitud süsteemi järgi',
+            'Aluskrohvikihi pealekandmine ja armeerimisvõrgu paigaldamine krohvikihti',
+            'Viimistluskrohvi pealekandmine ja liitekohtade viimistlemine',
+          ],
+        },
+      },
+      ru: {
+        slug: 'fasadnie-raboty',
+        title: 'Фасадные работы',
+        summary: 'Обновление фасадов и «мокрый фасад» с утеплением, армированием и декоративной штукатуркой.',
+        intro: 'Перед обновлением фасада осматривают существующую отделку и основание. В системе «мокрый фасад» утеплитель крепят к наружной стене и покрывают армированным штукатурным слоем. Решение подбирают с учётом устройства стены и состояния цоколя и примыканий к окнам.',
+        scope: ['Оценка существующей наружной отделки', 'Ремонт или замена облицовки по проекту', 'Отделка примыканий к окнам и цоколю'],
+        additionalScope: {
+          title: 'Этапы устройства мокрого фасада',
+          steps: [
+            'Подготовка основания и проверка примыканий к цоколю и окнам',
+            'Монтаж плит утеплителя по требованиям выбранной системы',
+            'Нанесение базового штукатурного слоя с армирующей сеткой',
+            'Нанесение декоративной штукатурки и финишная отделка примыканий',
+          ],
+        },
+      },
+      en: {
+        slug: 'facade-work',
+        title: 'Façade work',
+        summary: 'Façade renovation and rendered external wall insulation (ETICS), from insulation boards to the decorative finish.',
+        intro: 'A façade renovation starts with an inspection of the existing finish and substrate. In a rendered external wall insulation system, insulation is fixed to the outside of the wall and covered with reinforced render. The choice of system depends on the wall assembly and the condition of plinth and window junctions.',
+        scope: ['Assessing the existing exterior finish', 'Repairing or replacing cladding as specified', 'Finishing window and plinth junctions'],
+        additionalScope: {
+          title: 'Stages of rendered external wall insulation',
+          steps: [
+            'Preparing the substrate and reviewing plinth and window junctions',
+            'Installing insulation boards to suit the selected system',
+            'Applying the base render coat and embedding reinforcing mesh',
+            'Applying the decorative render and finishing the junctions',
+          ],
+        },
+      },
     },
   },
   {

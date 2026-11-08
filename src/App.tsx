@@ -245,7 +245,7 @@ function PageHeading({ ctx, label, title, description }: { ctx: Context; label: 
 
 function ServicePage({ ctx, service }: { ctx: Context; service: Service }) {
   const { t } = ctx;
-  const { title, summary, intro, scope } = service.text[ctx.lang];
+  const { title, summary, intro, scope, additionalScope } = service.text[ctx.lang];
   return <>
     <PageHeading ctx={ctx} label={t.section.services} title={title} description={summary} />
     <div className="section wrap detail-grid">
@@ -254,6 +254,10 @@ function ServicePage({ ctx, service }: { ctx: Context; service: Service }) {
         <p className="lead">{intro}</p>
         <h2>{t.scope}</h2>
         <ul>{scope.map((item) => <li key={item}><Check size={19} />{item}</li>)}</ul>
+        {additionalScope && <section>
+          <h2>{additionalScope.title}</h2>
+          <ol>{additionalScope.steps.map((step) => <li key={step}>{step}</li>)}</ol>
+        </section>}
         <a className="btn" href={ctx.url('contact') + '#quote'}>{t.quote}<ArrowUpRight size={17} /></a>
       </article>
       <aside className="detail-aside"><h2>{t.allServices}</h2>
