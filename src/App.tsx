@@ -92,6 +92,7 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
   return <div className={portfolio ? 'project-grid portfolio-grid' : 'project-grid'}>
     {projects.map((project, index) => {
       const text = project.text[ctx.lang];
+      const service = services.find((item) => item.id === project.serviceId);
       const height = project.imageHeight ?? 512;
       return <article className={portfolio && index === 0 ? 'project-card project-featured' : 'project-card'} key={project.id}>
         <div className="project-pair">
@@ -107,6 +108,10 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
             <p>{text.description}</p>
             {text.scope?.length ? <ul className="project-scope">{text.scope.map((item) => <li key={item}>{item}</li>)}</ul> : null}
             {project.location && <p className="project-place"><MapPin size={15} />{project.location}</p>}
+            {portfolio && service && <div className="project-actions">
+              <a className="text-link" href={ctx.url(service)}>{t.relatedWork}<ArrowUpRight size={16} /></a>
+              <a className="text-link" href={ctx.url('contact') + '?service=' + service.id + '#quote'}>{t.similarProject}<ArrowRight size={16} /></a>
+            </div>}
           </div>
         </div>
       </article>;
@@ -114,11 +119,43 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
   </div>;
 }
 
+function FacadeFeature({ ctx }: { ctx: Context }) {
+  const service = services.find((item) => item.id === 'facade');
+  const project = projects.find((item) => item.serviceId === 'facade');
+  if (!service || !project) return null;
+  return <section className="facade-feature">
+    <div className="wrap facade-grid">
+      <figure>
+        <img src={ctx.media(project.after)} alt={project.text[ctx.lang].afterAlt} width="768" height={project.imageHeight ?? 512} loading="lazy" decoding="async" />
+        {project.demo && <figcaption>{ctx.t.demo}</figcaption>}
+      </figure>
+      <div className="facade-copy">
+        <p className="kicker">{service.text[ctx.lang].title}</p>
+        <h2>{ctx.t.facadeTitle}</h2>
+        <p className="lead">{ctx.t.facadeText}</p>
+        <a className="text-link" href={ctx.url(service)}>{ctx.t.learn}<ArrowUpRight size={18} /></a>
+      </div>
+    </div>
+  </section>;
+}
+
+function Questions({ ctx }: { ctx: Context }) {
+  return <section className="section questions">
+    <div className="wrap faq-grid">
+      <div><p className="kicker">{ctx.t.sector}</p><h2>{ctx.t.faqTitle}</h2></div>
+      <div className="faq-list">{ctx.t.faq.map(([question, answer]) =>
+        <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
+    </div>
+  </section>;
+}
+
 function Approach({ ctx }: { ctx: Context }) {
   const { t } = ctx;
   return <section className="approach section">
     <div className="wrap approach-grid">
-      <div><p className="kicker">{t.section.about}</p><h2>{t.approachTitle}</h2><p className="lead">{t.approachText}</p></div>
+      <div><p className="kicker">{company.name || t.section.about}</p><h2>{t.approachTitle}</h2><p className="lead">{ctx.route === 'about' ? t.approachText : t.aboutIntro}</p>
+        {ctx.route !== 'about' && <a className="text-link approach-link" href={ctx.url('about')}>{t.pages.about[1]}<ArrowUpRight size={17} /></a>}
+      </div>
       <ul>{t.approach.map(([title, detail], index) => {
         const Icon = approachIcons[index];
         return <li key={title}><span className="approach-icon"><Icon size={21} /></span><div><h3>{title}</h3><p>{detail}</p></div></li>;
@@ -156,7 +193,8 @@ function QuoteForm({ ctx }: { ctx: Context }) {
   const { t, lang } = ctx;
   const f = t.form;
   return <form id="quote" className="quote-form" action={formEndpoint || undefined} method={formEndpoint ? 'post' : undefined}
-    data-enquiry={formEndpoint ? '' : undefined} data-sending={f.sending} data-success={f.success} data-error={f.error}>
+    data-enquiry={formEndpoint ? '' : undefined} data-sending={f.sending} data-success={f.success} data-error={f.error}
+    data-required-message={f.invalidRequired} data-email-message={f.invalidEmail}>
     <h2>{f.title}</h2>
     {!formEndpoint && <p id="form-offline" className="form-note"><Info size={18} />{f.disabled}</p>}
     <p className="form-required">{f.required}</p>
@@ -167,7 +205,7 @@ function QuoteForm({ ctx }: { ctx: Context }) {
         <label>{f.phone} *<input name="phone" type="tel" autoComplete="tel" required maxLength={45} /></label>
         <label>{f.email} *<input name="email" type="email" autoComplete="email" required maxLength={254} /></label>
         <label>{f.work} *<select name="work" required defaultValue=""><option value="" disabled>{f.choose}</option>
-          {services.map((service) => <option key={service.id} value={service.text[lang].title}>{service.text[lang].title}</option>)}
+          {services.map((service) => <option key={service.id} data-service-id={service.id} value={service.text[lang].title}>{service.text[lang].title}</option>)}
           <option>{f.other}</option>
         </select></label>
       </div>
@@ -229,6 +267,7 @@ function Home({ ctx }: { ctx: Context }) {
         <Services ctx={ctx} />
       </div>
     </section>
+    <FacadeFeature ctx={ctx} />
     <Approach ctx={ctx} />
     <section className="section gallery-section">
       <div className="wrap">
@@ -238,6 +277,7 @@ function Home({ ctx }: { ctx: Context }) {
       </div>
     </section>
     <Process ctx={ctx} />
+    <Questions ctx={ctx} />
     <Contact ctx={ctx} />
   </>;
 }
@@ -252,6 +292,7 @@ function PageHeading({ ctx, label, title, description }: { ctx: Context; label: 
 function ServicePage({ ctx, service }: { ctx: Context; service: Service }) {
   const { t } = ctx;
   const { title, summary, intro, scope, additionalScope } = service.text[ctx.lang];
+  const project = projects.find((item) => item.serviceId === service.id);
   return <>
     <PageHeading ctx={ctx} label={t.section.services} title={title} description={summary} />
     <div className="section wrap detail-grid">
@@ -264,10 +305,14 @@ function ServicePage({ ctx, service }: { ctx: Context; service: Service }) {
           <h2>{additionalScope.title}</h2>
           <ol>{additionalScope.steps.map((step) => <li key={step}>{step}</li>)}</ol>
         </section>}
-        <a className="btn" href={ctx.url('contact') + '#quote'}>{t.quote}<ArrowUpRight size={17} /></a>
+        <a className="btn" href={ctx.url('contact') + '?service=' + service.id + '#quote'}>{t.quote}<ArrowUpRight size={17} /></a>
       </article>
       <aside className="detail-aside"><h2>{t.allServices}</h2>
         <ul>{services.map((item) => <li key={item.id}><a href={ctx.url(item)} aria-current={item === service ? 'page' : undefined}>{item.text[ctx.lang].title}<ArrowRight size={15} /></a></li>)}</ul>
+        {project && <figure className="service-example">
+          <img src={ctx.media(project.after)} alt={project.text[ctx.lang].afterAlt} width="768" height={project.imageHeight ?? 512} loading="lazy" decoding="async" />
+          <figcaption>{project.demo ? t.demo : project.text[ctx.lang].title}</figcaption>
+        </figure>}
       </aside>
     </div>
   </>;
@@ -295,7 +340,7 @@ function PageBody({ ctx }: { ctx: Context }) {
     </section>}
     {route === 'about' && <>
       {company.contactPerson[ctx.lang] && <section className="wrap profile">
-        <div><p className="kicker">{t.contactPerson}</p><h2>{company.contactPerson[ctx.lang]}</h2></div>
+        <div><p className="kicker">{t.contactPerson}</p><h2>{company.contactPerson[ctx.lang]}</h2><p className="lead">{t.aboutIntro}</p></div>
         <a className="text-link" href={ctx.url('contact')}>{t.section.contact}<ArrowUpRight size={17} /></a>
       </section>}
       <Approach ctx={ctx} /><Process ctx={ctx} />

@@ -63,7 +63,9 @@ for (const lang of languages) {
 
 for (const reference of references) {
   assert.ok(reference.startsWith(base + '/'), 'Wrong base path: ' + reference);
-  const [pathname, hash] = reference.slice(base.length + 1).split('#');
+  const target = new URL(reference, 'https://example.invalid');
+  const pathname = decodeURIComponent(target.pathname.slice(base.length + 1));
+  const hash = decodeURIComponent(target.hash.slice(1));
   const file = join(root, pathname.endsWith('/') || pathname === '' ? posix.join(pathname, 'index.html') : pathname);
   await access(file);
   if (hash) assert.ok((await readFile(file, 'utf8')).includes(`id="${hash}"`), reference);

@@ -17,6 +17,7 @@ export type Service = {
 };
 type Project = {
   id: string;
+  serviceId: string;
   demo: boolean;
   before: string;
   after: string;
@@ -26,30 +27,6 @@ type Project = {
 };
 
 const services: Service[] = [
-  {
-    id: 'building', confirmed: false,
-    text: {
-      et: { slug: 'uldehitus', title: 'Üldehitustööd', summary: 'Hoone põhikonstruktsioonid, vaheseinad ja ehitusetappide koordineerimine.', intro: 'Üldehituse lähtepunkt on projekt ning olemasoleva hoone või krundi seisukord. Tööde järjekord aitab planeerida materjalide tarneid ja järgmiste tegijate ligipääsu.', scope: ['Olemasolevate konstruktsioonide ja projekti ülevaatus', 'Karkassid ja vaheseinad vastavalt projektile', 'Järgmisteks ehitusetappideks vajalikud ettevalmistused'] },
-      ru: { slug: 'obshchestroitelnie-raboty', title: 'Общестроительные работы', summary: 'Основные конструкции здания, перегородки и координация этапов строительства.', intro: 'Объём общестроительных работ определяют по проекту и состоянию здания или участка. Последовательность этапов помогает спланировать поставку материалов и доступ смежных подрядчиков.', scope: ['Изучение проекта и осмотр существующих конструкций', 'Каркасы и перегородки по проекту', 'Подготовка объекта к следующим этапам'] },
-      en: { slug: 'general-construction', title: 'General construction', summary: 'Core building structures, partitions and coordination between stages of construction.', intro: 'General construction starts with the drawings and the condition of the building or site. The order of work helps determine when materials should arrive and when other trades can start.', scope: ['Reviewing drawings and existing structures', 'Framing and partitions in line with the design', 'Preparing the site for subsequent trades'] },
-    },
-  },
-  {
-    id: 'renovation', confirmed: false,
-    text: {
-      et: { slug: 'korterite-ja-majade-remont', title: 'Korterite ja majade remont', summary: 'Eluruumide värskendamine üksikust toast kuni terve koduni.', intro: 'Remondi kavandamisel tasub eristada töid, mis lahendavad kulumise või niiskuse probleeme, ja töid, mis muudavad ruumi välimust. Kasutusel oleva kodu puhul saab arutada tööde jagamist etappideks.', scope: ['Lammutatavate ja säilitatavate pindade määramine', 'Seinte ja põrandate parandamine', 'Tööde planeerimine ruumide ja etappide kaupa'] },
-      ru: { slug: 'remont-kvartir-i-domov', title: 'Ремонт квартир и домов', summary: 'Обновление жилых помещений от одной комнаты до всего дома.', intro: 'При планировании ремонта полезно отделить устранение износа и сырости от косметического обновления. Если в доме продолжают жить, работы можно обсудить по комнатам и этапам.', scope: ['Определение поверхностей, которые нужно демонтировать или сохранить', 'Восстановление стен и полов', 'Планирование работ по помещениям и этапам'] },
-      en: { slug: 'home-and-apartment-renovation', title: 'Home and apartment renovation', summary: 'Updating living spaces, from a single room to a whole property.', intro: 'A renovation plan distinguishes wear or moisture problems from changes to the look of a room. For an occupied home, it also helps to discuss which areas can be worked on in stages.', scope: ['Identifying surfaces to remove and retain', 'Repairing walls and floors', 'Sequencing work by room and stage'] },
-    },
-  },
-  {
-    id: 'interior', confirmed: false,
-    text: {
-      et: { slug: 'siseviimistlus', title: 'Siseviimistlus', summary: 'Seinte, lagede ja põrandate ettevalmistus ning viimistlemine.', intro: 'Viimistluse kvaliteet sõltub aluspinnast ja detailidest, mida hiljem enam näha ei ole. Materjalide valikul tasub arvestada ruumi koormuse, valguse ja hooldusvajadusega.', scope: ['Aluspinna tasandamine ja ettevalmistus', 'Seinte ja lagede värvimine', 'Põrandakatete, liistude ja liitekohtade viimistlus'] },
-      ru: { slug: 'vnutrennyaya-otdelka', title: 'Внутренняя отделка', summary: 'Подготовка и финишная отделка стен, потолков и полов.', intro: 'Качество отделки зависит от подготовки основания и деталей, которые после ремонта скрыты. Материалы стоит подбирать с учётом освещения, нагрузки на поверхности и ухода за ними.', scope: ['Выравнивание и подготовка основания', 'Окраска стен и потолков', 'Укладка напольных покрытий и оформление стыков'] },
-      en: { slug: 'interior-finishing', title: 'Interior finishing', summary: 'Surface preparation and finishing for walls, ceilings and floors.', intro: 'A lasting finish depends on the substrate and details that will eventually be covered. Materials should suit the room’s light, everyday wear and maintenance needs.', scope: ['Levelling and preparing surfaces', 'Painting walls and ceilings', 'Fitting floor finishes, trim and junction details'] },
-    },
-  },
   {
     id: 'facade', confirmed: false,
     text: {
@@ -104,6 +81,30 @@ const services: Service[] = [
     },
   },
   {
+    id: 'building', confirmed: false,
+    text: {
+      et: { slug: 'uldehitus', title: 'Üldehitustööd', summary: 'Hoone põhikonstruktsioonid, vaheseinad ja ehitusetappide koordineerimine.', intro: 'Üldehituse lähtepunkt on projekt ning olemasoleva hoone või krundi seisukord. Tööde järjekord aitab planeerida materjalide tarneid ja järgmiste tegijate ligipääsu.', scope: ['Olemasolevate konstruktsioonide ja projekti ülevaatus', 'Karkassid ja vaheseinad vastavalt projektile', 'Järgmisteks ehitusetappideks vajalikud ettevalmistused'] },
+      ru: { slug: 'obshchestroitelnie-raboty', title: 'Общестроительные работы', summary: 'Основные конструкции здания, перегородки и координация этапов строительства.', intro: 'Объём общестроительных работ определяют по проекту и состоянию здания или участка. Последовательность этапов помогает спланировать поставку материалов и доступ смежных подрядчиков.', scope: ['Изучение проекта и осмотр существующих конструкций', 'Каркасы и перегородки по проекту', 'Подготовка объекта к следующим этапам'] },
+      en: { slug: 'general-construction', title: 'General construction', summary: 'Core building structures, partitions and coordination between stages of construction.', intro: 'General construction starts with the drawings and the condition of the building or site. The order of work helps determine when materials should arrive and when other trades can start.', scope: ['Reviewing drawings and existing structures', 'Framing and partitions in line with the design', 'Preparing the site for subsequent trades'] },
+    },
+  },
+  {
+    id: 'renovation', confirmed: false,
+    text: {
+      et: { slug: 'korterite-ja-majade-remont', title: 'Korterite ja majade remont', summary: 'Eluruumide värskendamine üksikust toast kuni terve koduni.', intro: 'Remondi kavandamisel tasub eristada töid, mis lahendavad kulumise või niiskuse probleeme, ja töid, mis muudavad ruumi välimust. Kasutusel oleva kodu puhul saab arutada tööde jagamist etappideks.', scope: ['Lammutatavate ja säilitatavate pindade määramine', 'Seinte ja põrandate parandamine', 'Tööde planeerimine ruumide ja etappide kaupa'] },
+      ru: { slug: 'remont-kvartir-i-domov', title: 'Ремонт квартир и домов', summary: 'Обновление жилых помещений от одной комнаты до всего дома.', intro: 'При планировании ремонта полезно отделить устранение износа и сырости от косметического обновления. Если в доме продолжают жить, работы можно обсудить по комнатам и этапам.', scope: ['Определение поверхностей, которые нужно демонтировать или сохранить', 'Восстановление стен и полов', 'Планирование работ по помещениям и этапам'] },
+      en: { slug: 'home-and-apartment-renovation', title: 'Home and apartment renovation', summary: 'Updating living spaces, from a single room to a whole property.', intro: 'A renovation plan distinguishes wear or moisture problems from changes to the look of a room. For an occupied home, it also helps to discuss which areas can be worked on in stages.', scope: ['Identifying surfaces to remove and retain', 'Repairing walls and floors', 'Sequencing work by room and stage'] },
+    },
+  },
+  {
+    id: 'interior', confirmed: false,
+    text: {
+      et: { slug: 'siseviimistlus', title: 'Siseviimistlus', summary: 'Seinte, lagede ja põrandate ettevalmistus ning viimistlemine.', intro: 'Viimistluse kvaliteet sõltub aluspinnast ja detailidest, mida hiljem enam näha ei ole. Materjalide valikul tasub arvestada ruumi koormuse, valguse ja hooldusvajadusega.', scope: ['Aluspinna tasandamine ja ettevalmistus', 'Seinte ja lagede värvimine', 'Põrandakatete, liistude ja liitekohtade viimistlus'] },
+      ru: { slug: 'vnutrennyaya-otdelka', title: 'Внутренняя отделка', summary: 'Подготовка и финишная отделка стен, потолков и полов.', intro: 'Качество отделки зависит от подготовки основания и деталей, которые после ремонта скрыты. Материалы стоит подбирать с учётом освещения, нагрузки на поверхности и ухода за ними.', scope: ['Выравнивание и подготовка основания', 'Окраска стен и потолков', 'Укладка напольных покрытий и оформление стыков'] },
+      en: { slug: 'interior-finishing', title: 'Interior finishing', summary: 'Surface preparation and finishing for walls, ceilings and floors.', intro: 'A lasting finish depends on the substrate and details that will eventually be covered. Materials should suit the room’s light, everyday wear and maintenance needs.', scope: ['Levelling and preparing surfaces', 'Painting walls and ceilings', 'Fitting floor finishes, trim and junction details'] },
+    },
+  },
+  {
     id: 'roof', confirmed: false,
     text: {
       et: { slug: 'katusetood', title: 'Katusetööd', summary: 'Katusekatte ja veesüsteemi parandamine või uuendamine.', intro: 'Katuse tööde ulatus sõltub nii kattematerjalist kui ka selle all oleva konstruktsiooni seisukorrast. Koos kattega tuleb üle vaadata vee äravool ja läbiviikude ümbrus.', scope: ['Katte, läbiviikude ja ligipääsu ülevaatus', 'Katte parandamine või vahetamine', 'Vihmavee äravoolu ja liiteplekkide lahendamine'] },
@@ -123,7 +124,7 @@ const services: Service[] = [
 
 const projects: Project[] = [
   {
-    id: 'rendered-facade', demo: true, before: 'rendered-facade-before.webp', after: 'rendered-facade-after.webp', imageHeight: 768, location: '',
+    id: 'rendered-facade', serviceId: 'facade', demo: true, before: 'rendered-facade-before.webp', after: 'rendered-facade-after.webp', imageHeight: 768, location: '',
     text: {
       et: { title: 'Kivimaja soojustatud fassaad', category: 'Soojustus ja krohv', description: 'Krohvikatte uuendamise näide, kus soojustus ja hele viimistlus jätavad alles maja tumeda katuse ning olemasoleva aknajaotuse.', beforeAlt: 'Kulunud halli krohviga kahekorruseline kivimaja', afterAlt: 'Sama kivimaja heleda viimistluskrohvi ja tumeda sokliga', scope: ['Soojustusplaadid', 'Armeeritud aluskrohv', 'Viimistluskrohv'] },
       ru: { title: 'Мокрый фасад каменного дома', category: 'Утепление и штукатурка', description: 'Пример наружного утепления со светлой декоративной штукатуркой и тёмным цоколем. Кровля и расположение окон остаются прежними.', beforeAlt: 'Двухэтажный каменный дом со старой серой штукатуркой', afterAlt: 'Тот же дом со светлой декоративной штукатуркой и тёмным цоколем', scope: ['Монтаж утеплителя', 'Армирование сеткой', 'Декоративная штукатурка'] },
@@ -131,7 +132,7 @@ const projects: Project[] = [
     },
   },
   {
-    id: 'apartment', demo: true, before: 'apartment-before.webp', after: 'apartment-after.webp', location: '',
+    id: 'apartment', serviceId: 'renovation', demo: true, before: 'apartment-before.webp', after: 'apartment-after.webp', location: '',
     text: {
       et: { title: 'Valgusküllane korter', category: 'Korteri remont', description: 'Näide, kuidas taastatud seinad ja tammeparkett muudavad vana elutoa ilmet.', beforeAlt: 'Krohvimata seinte ja palja põrandaga elutuba', afterAlt: 'Tammeparketi ja heleda seinaviimistlusega elutuba', scope: ['Seinte ettevalmistus', 'Siseviimistlus', 'Parkett'] },
       ru: { title: 'Светлая квартира', category: 'Ремонт квартиры', description: 'Пример того, как восстановленные стены и дубовый паркет меняют интерьер старой гостиной.', beforeAlt: 'Гостиная с необработанными стенами и черновым полом', afterAlt: 'Гостиная с дубовым паркетом и светлыми стенами', scope: ['Подготовка стен', 'Чистовая отделка', 'Укладка паркета'] },
@@ -139,7 +140,7 @@ const projects: Project[] = [
     },
   },
   {
-    id: 'house', demo: true, before: 'house-before.webp', after: 'house-after.webp', location: '',
+    id: 'house', serviceId: 'roof', demo: true, before: 'house-before.webp', after: 'house-after.webp', location: '',
     text: {
       et: { title: 'Puitmaja uus ilme', category: 'Fassaad ja katus', description: 'Näide puitfassaadi ja katuse uuendamisest, mis säilitab maja algse mahu.', beforeAlt: 'Kulunud laudise ja katusega puitmaja', afterAlt: 'Uue puitvoodri ja tumeda valtskatusega maja', scope: ['Puitvooder', 'Valtskatus', 'Aknaümbrused'] },
       ru: { title: 'Новый облик деревянного дома', category: 'Фасад и кровля', description: 'Пример обновления деревянного фасада и кровли с сохранением объёма дома.', beforeAlt: 'Деревянный дом с изношенной обшивкой и кровлей', afterAlt: 'Дом с новой деревянной обшивкой и тёмной фальцевой кровлей', scope: ['Деревянная обшивка', 'Фальцевая кровля', 'Отделка оконных проёмов'] },
@@ -164,7 +165,7 @@ export const company = {
   searchConsoleVerification: '',
   formspreeId: '',
   privacyPolicy: null as Localized<[string, string][]> | null,
-  hero: { image: 'hero.webp', mobile: 'hero-mobile.webp', social: 'social.jpg', demo: true },
+  hero: { image: 'hero.webp', mobile: 'hero-mobile.webp', social: 'boiku-social.jpg', demo: true },
   services,
   projects,
 };

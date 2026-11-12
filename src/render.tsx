@@ -84,7 +84,8 @@ function render(lang: Language, route: Route, settings: BuildSettings, root = fa
         {route !== 'missing' && siteUrl && <>
           <meta property="og:url" content={url} />
           <meta property="og:image" content={siteUrl + '/media/' + company.hero.social} />
-          <meta property="og:image:alt" content={copy[lang].heroAlt} />
+          <meta property="og:image:alt" content={company.name || copy[lang].brand} />
+          <meta name="twitter:card" content="summary_large_image" />
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: schema(lang, route, settings) }} />
         </>}
         <link rel="icon" href={base + '/media/' + (company.logo || 'mark.svg')} />

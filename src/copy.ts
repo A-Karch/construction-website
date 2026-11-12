@@ -17,6 +17,13 @@ type Copy = {
   learn: string;
   allServices: string;
   allWorks: string;
+  similarProject: string;
+  relatedWork: string;
+  facadeTitle: string;
+  facadeText: string;
+  aboutIntro: string;
+  faqTitle: string;
+  faq: [string, string][];
   overview: string;
   homeHero: [string, string, string];
   heroAlt: string;
@@ -41,6 +48,7 @@ type Copy = {
     title: string; name: string; phone: string; email: string; work: string; choose: string; other: string;
     message: string; hint: string; consent: string; privacyLink: string; submit: string;
     disabled: string; sending: string; success: string; error: string; required: string;
+    invalidRequired: string; invalidEmail: string;
   };
   privacyDraft: string;
   policy: [string, string][];
@@ -72,6 +80,18 @@ export const copy: Localized<Copy> = {
     learn: 'Vaata lähemalt',
     allServices: 'Kõik teenused',
     allWorks: 'Vaata projekte',
+    similarProject: 'Arutame sarnast projekti',
+    relatedWork: 'Vaata tööde kirjeldust',
+    facadeTitle: 'Fassaadi soojustamine ja viimistlus',
+    facadeText: 'Soojustusplaadid, armeeritud krohvikiht ja viimistluskrohv moodustavad tervikliku süsteemi. Enne lahenduse valikut vaatame üle aluspinna, sokli ja aknaümbrused.',
+    aboutIntro: 'BOIKU Ehitus tegeleb ehituse, fassaadide ja remondiga Eestis. Alustame sinu soovidest ja hoone seisukorrast ning paneme nende põhjal paika tööde ulatuse ja järjekorra.',
+    faqTitle: 'Enne tööde alustamist',
+    faq: [
+      ['Mida hinnapäringusse kirjutada?', 'Lisa objekti asukoht, tööde kirjeldus, ligikaudne pindala ja soovitud ajaraam. Märgi ka, kas ruume kasutatakse tööde ajal.'],
+      ['Millest sõltub tööde hind?', 'Hinda mõjutavad tööde maht, aluspinna seisukord, materjalid ja ligipääs objektile. Pakkumises tuleb täpsustada, millised tööd ja materjalid hinna sisse kuuluvad.'],
+      ['Kuidas valida fassaadi soojustust?', 'Sobiv lahendus sõltub seina ehitusest, aluspinnast ja hoone projektist. Arutame soojustust koos sokli, aknaümbruste ja viimistlusega.'],
+      ['Kas remonti saab jagada etappideks?', 'Jah, etappide võimalust saab arutada tööde planeerimisel. Oluline on arvestada ruumide kasutamise, tolmu tekitavate tööde ja järgmiste etappide eeldustega.'],
+    ],
     overview: 'Vali töö, millest soovid rohkem teada. Konkreetne tööde ulatus sõltub hoone seisukorrast ja projektist.',
     homeHero: ['Professionaalsed ehitus- ja renoveerimistööd Eestis', 'Fassaadi soojustamine, kodu remont ja siseviimistlus. Lepime tööde ulatuse kokku enne alustamist.', 'EHITUS · FASSAADID · REMONT'],
     heroAlt: 'Mändide vahel asuv moodne puitmaja tumeda katusega',
@@ -107,6 +127,7 @@ export const copy: Localized<Copy> = {
       consent: 'Olen tutvunud', privacyLink: 'privaatsuspoliitikaga', submit: 'Saada päring',
       disabled: 'Vorm ei ole ühendatud. Päringut ei saa siin praegu saata.', sending: 'Saadame päringut…',
       success: 'Päring saadeti. Aitäh!', error: 'Päringu saatmine ei õnnestunud. Proovi uuesti või kasuta kontaktandmeid.', required: 'Tärniga väljad on kohustuslikud.',
+      invalidRequired: 'Täida see väli.', invalidEmail: 'Sisesta kehtiv e-posti aadress.',
     },
     privacyDraft: 'Privaatsuspoliitika kavand. Vastutava töötleja andmed, õiguslikud alused ja säilitustähtajad tuleb enne vormi avamist kinnitada.',
     policy: [
@@ -142,6 +163,18 @@ export const copy: Localized<Copy> = {
     learn: 'Подробнее',
     allServices: 'Все услуги',
     allWorks: 'Смотреть проекты',
+    similarProject: 'Обсудить похожий проект',
+    relatedWork: 'Подробнее об этих работах',
+    facadeTitle: 'Утепление и отделка фасадов',
+    facadeText: 'Утеплитель, армированный штукатурный слой и декоративная отделка работают как единая система. Перед выбором решения осматриваем основание, цоколь и примыкания к окнам.',
+    aboutIntro: 'BOIKU Ehitus — строительство, фасадные работы и ремонт в Эстонии. Начинаем с ваших пожеланий и состояния объекта, затем определяем объём и последовательность работ.',
+    faqTitle: 'Перед началом работ',
+    faq: [
+      ['Что указать в запросе сметы?', 'Напишите, где находится объект, какие работы нужны, примерную площадь и желаемые сроки. Укажите, будете ли вы пользоваться помещением во время ремонта.'],
+      ['От чего зависит стоимость?', 'На цену влияют объём работ, состояние основания, материалы и доступ к объекту. В предложении важно перечислить работы и материалы, которые входят в стоимость.'],
+      ['Как подобрать утепление фасада?', 'Решение зависит от конструкции стены, состояния основания и проекта здания. Утепление рассматриваем вместе с устройством цоколя, оконных примыканий и финишной отделкой.'],
+      ['Можно ли разбить ремонт на этапы?', 'Возможность работать по этапам обсуждаем при планировании. Учитываем использование помещений, пыльные работы и то, какие работы нужно закончить перед следующим этапом.'],
+    ],
     overview: 'Выберите интересующий вид работ. Конкретный объём зависит от состояния объекта и требований проекта.',
     homeHero: ['Профессиональное строительство и ремонт в Эстонии', 'Утепление фасадов, ремонт домов и квартир, внутренняя отделка. Согласовываем объём работ до начала проекта.', 'СТРОИТЕЛЬСТВО · ФАСАДЫ · РЕМОНТ'],
     heroAlt: 'Современный деревянный дом с тёмной крышей среди сосен',
@@ -177,6 +210,7 @@ export const copy: Localized<Copy> = {
       consent: 'Я ознакомился(-ась) с', privacyLink: 'политикой конфиденциальности', submit: 'Отправить запрос',
       disabled: 'Форма не подключена. Сейчас отправить запрос через сайт нельзя.', sending: 'Отправляем запрос…',
       success: 'Запрос отправлен. Спасибо!', error: 'Не удалось отправить запрос. Повторите попытку или воспользуйтесь контактными данными.', required: 'Поля со звёздочкой обязательны.',
+      invalidRequired: 'Заполните это поле.', invalidEmail: 'Укажите корректный адрес электронной почты.',
     },
     privacyDraft: 'Проект политики. До запуска формы необходимо подтвердить данные оператора, правовые основания обработки и сроки хранения.',
     policy: [
@@ -212,6 +246,18 @@ export const copy: Localized<Copy> = {
     learn: 'Learn more',
     allServices: 'All services',
     allWorks: 'View projects',
+    similarProject: 'Discuss a similar project',
+    relatedWork: 'Explore this type of work',
+    facadeTitle: 'External wall insulation and finishing',
+    facadeText: 'Insulation boards, reinforced render and the decorative finish work together as one system. We review the substrate, plinth and window junctions before choosing an approach.',
+    aboutIntro: 'BOIKU Ehitus brings together construction, façade work and renovation in Estonia. We start with your plans and the condition of the property, then work out the scope and sequence.',
+    faqTitle: 'Before work begins',
+    faq: [
+      ['What should I include in a quote request?', 'Tell us the location, the work you need, the approximate area and your preferred timeframe. Mention whether the property will be occupied during the work.'],
+      ['What affects the price?', 'The scope, existing surfaces, materials and access to the site all affect the price. The quote should specify which work and materials are included.'],
+      ['How is façade insulation chosen?', 'The choice depends on the wall construction, substrate and building design. We consider insulation alongside plinth details, window junctions and the final finish.'],
+      ['Can renovation be carried out in stages?', 'Phasing can be discussed during planning. It needs to account for occupied rooms, dusty work and the tasks that must be finished before the next stage.'],
+    ],
     overview: 'Choose a type of work to explore. The scope depends on the condition of the property and the requirements of your project.',
     homeHero: ['Professional construction and renovation in Estonia', 'External wall insulation, home renovations and interior finishing. We agree the scope before work starts.', 'CONSTRUCTION · FAÇADES · RENOVATION'],
     heroAlt: 'Modern timber house with a dark roof among pine trees',
@@ -247,6 +293,7 @@ export const copy: Localized<Copy> = {
       consent: 'I have read the', privacyLink: 'privacy policy', submit: 'Send enquiry',
       disabled: 'The form is offline. Enquiries cannot be submitted here yet.', sending: 'Sending your enquiry…',
       success: 'Your enquiry was sent. Thank you!', error: 'Your enquiry could not be sent. Try again or use the contact details.', required: 'Fields marked with an asterisk are required.',
+      invalidRequired: 'Complete this field.', invalidEmail: 'Enter a valid email address.',
     },
     privacyDraft: 'Draft policy. Confirm the data controller, legal basis and retention periods before enabling the form.',
     policy: [

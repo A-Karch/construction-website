@@ -20,8 +20,35 @@ menu?.addEventListener('keydown', (event) => {
   menu.querySelector('summary')?.focus();
 });
 
-const form = document.querySelector<HTMLFormElement>('form[data-enquiry]');
+const form = document.querySelector<HTMLFormElement>('.quote-form');
 if (form) {
+  const requestedService = new URLSearchParams(location.search).get('service');
+  const work = form.querySelector<HTMLSelectElement>('select[name=work]');
+  const requestedOption = work && Array.from(work.options).find((option) => option.dataset.serviceId === requestedService);
+  if (requestedOption) {
+    work.value = requestedOption.value;
+    document.querySelectorAll<HTMLAnchorElement>('.language-nav a').forEach((link) => {
+      const url = new URL(link.href);
+      url.searchParams.set('service', requestedOption.dataset.serviceId || '');
+      url.hash = 'quote';
+      link.href = url.href;
+    });
+  }
+  form.addEventListener('invalid', (event) => {
+    const field = event.target;
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return;
+    if (field.validity.valueMissing) field.setCustomValidity(form.dataset.requiredMessage || '');
+    else if (field.validity.typeMismatch) field.setCustomValidity(form.dataset.emailMessage || '');
+  }, true);
+  form.addEventListener('input', (event) => {
+    const field = event.target;
+    if (field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement) {
+      field.setCustomValidity('');
+    }
+  });
+}
+
+if (form?.hasAttribute('data-enquiry')) {
   const button = form.querySelector<HTMLButtonElement>('button[type=submit]');
   const status = form.querySelector<HTMLElement>('[role=status]');
   let sending = false;

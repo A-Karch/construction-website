@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#202420"/>
+  <g fill="none" stroke="#3a4039" stroke-width="1">
+    <path d="M730 0v630M830 0v630M930 0v630M1030 0v630M1130 0v630M700 115h500M700 215h500M700 315h500M700 415h500M700 515h500"/>
+  </g>
+  <g transform="translate(64 48)">
+    <rect width="64" height="64" rx="9" fill="#efa448"/>
+    <path fill="#202420" d="M12 23 32 10l20 13v6L32 16 12 29z"/>
+    <path fill="#202420" fill-rule="evenodd" d="M18 32h17c6 0 10 3 10 8 0 2-1 4-3 5 3 1 5 3 5 6 0 5-4 8-11 8H18zm7 6v5h9c3 0 4-1 4-3s-1-2-4-2zm0 10v5h10c3 0 5-1 5-3s-2-2-5-2z"/>
+  </g>
+  <g font-family="Segoe UI, Arial, sans-serif">
+    <text x="146" y="91" fill="#ffffff" font-size="36" font-weight="750" letter-spacing="1">BOIKU Ehitus</text>
+    <text x="64" y="196" fill="#efa448" font-size="17" font-weight="650" letter-spacing="2">FASSAADID · REMONT · VIIMISTLUS</text>
+    <text x="59" y="288" fill="#ffffff" font-size="78" font-weight="750" letter-spacing="-3">
+      <tspan x="59">Ehitus ja</tspan>
+      <tspan x="59" dy="86">renoveerimine</tspan>
+      <tspan x="59" dy="86">Eestis.</tspan>
+    </text>
+    <text x="64" y="572" fill="#d7d9ce" font-size="21">ET · RU · EN</text>
+    <text x="1136" y="572" text-anchor="end" fill="#d7d9ce" font-size="18">BOIKU EHITUS</text>
+  </g>
+  <path d="M64 528h1072" stroke="#555c50" stroke-width="1"/>
+  <g fill="none" stroke-linejoin="round">
+    <path d="m765 300 145-112 162 126v172H765z" stroke="#efa448" stroke-width="5"/>
+    <path d="m726 307 184-143 199 155M910 188v298M765 355h307M970 364v122M910 239h162" stroke="#efa448" stroke-width="3"/>
+    <path d="M800 387h66v99h-66zM982 282h46v45h-46z" stroke="#a8ad9c" stroke-width="3"/>
+  </g>
+</svg>
