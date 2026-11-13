@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import {
   ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BrickWall, Building2, Check, ClipboardList, Hammer,
-  House, Info, Layers, MapPin, Menu, PaintRoller, Phone, Ruler,
+  House, Info, Layers, MapPin, Menu, MessageCircle, PaintRoller, Phone, Ruler, X,
 } from 'lucide-react';
 import { company, languages, type Language, type Service } from './company';
 import { copy } from './copy';
@@ -15,11 +15,12 @@ type Context = {
   t: typeof copy.et;
 };
 
-const serviceIcons = { building: Building2, renovation: House, interior: PaintRoller, facade: BrickWall, roof: Layers, rebuild: Hammer };
+const serviceIcons = { building: Building2, renovation: House, interior: PaintRoller, facade: BrickWall, roof: Layers, rebuild: Hammer, plastering: Layers, painting: PaintRoller, cornices: Ruler };
 const approachIcons = [ClipboardList, Ruler, Check];
 
 const phone = company.phone ? 'tel:' + company.phone.replace(/[\s()-]/g, '') : '';
 const email = company.email ? 'mailto:' + company.email : '';
+const whatsapp = company.whatsapp ? 'https://wa.me/' + company.whatsapp.replace(/\D/g, '') : '';
 const formEndpoint = !company.preview && company.formspreeId ? 'https://formspree.io/f/' + company.formspreeId : '';
 
 function Brand({ ctx }: { ctx: Context }) {
@@ -51,6 +52,7 @@ function Header({ ctx, base }: { ctx: Context; base: string }) {
               aria-label={language.toUpperCase() + ' · ' + languageNames[language]} aria-current={language === lang ? 'page' : undefined}>{language.toUpperCase()}</a>)}
           </nav>
           {phone && <a className="header-phone" href={phone} aria-label={t.call + ' ' + company.phone}><Phone size={16} />{company.phone}</a>}
+          {whatsapp && <a className="header-whatsapp" href={whatsapp} aria-label={t.whatsapp} title={t.whatsapp}><MessageCircle size={21} /></a>}
           <a className="btn btn-small header-quote" href={ctx.url('contact') + '#quote'}>{t.quote}<ArrowUpRight size={16} /></a>
           <details className="mobile-menu">
             <summary aria-label={t.menu}><Menu size={23} /></summary>
@@ -93,15 +95,15 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
     {projects.map((project, index) => {
       const text = project.text[ctx.lang];
       const service = services.find((item) => item.id === project.serviceId);
-      const height = project.imageHeight ?? 512;
+      const cover = project.photos[0];
+      if (!cover) return null;
       return <article className={portfolio && index === 0 ? 'project-card project-featured' : 'project-card'} key={project.id}>
-        <div className="project-pair">
-          <figure><img src={ctx.media(project.before)} alt={text.beforeAlt} width="768" height={height} loading="lazy" decoding="async" /><figcaption>{t.before}</figcaption></figure>
-          <figure><img src={ctx.media(project.after)} alt={text.afterAlt} width="768" height={height} loading="lazy" decoding="async" /><figcaption>{t.after}</figcaption></figure>
-        </div>
+        <a className="project-cover" data-gallery-photo href={ctx.media('portfolio/' + cover.file)} aria-label={t.viewPhoto + ' · ' + text.title}>
+          <img src={ctx.media('portfolio/' + cover.file)} alt={cover.alt[ctx.lang]} width={cover.width} height={cover.height} loading="lazy" decoding="async" />
+        </a>
         <div className="project-copy">
           <div>
-            <p className="project-type">{text.category}{project.demo && <span>{t.demo}</span>}</p>
+            <p className="project-type">{text.category}</p>
             {portfolio ? <h2>{text.title}</h2> : <h3>{text.title}</h3>}
           </div>
           <div>
@@ -114,6 +116,14 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
             </div>}
           </div>
         </div>
+        {portfolio && project.photos.length > 1 && <details className="project-gallery">
+          <summary>{project.photos.length} {t.photos}<ArrowDown size={17} /></summary>
+          <div className="photo-grid">{project.photos.slice(1).map((photo) =>
+            <a key={photo.file} data-gallery-photo href={ctx.media('portfolio/' + photo.file)} aria-label={t.viewPhoto + ' · ' + photo.alt[ctx.lang]}>
+              <img src={ctx.media('portfolio/' + photo.file)} alt={photo.alt[ctx.lang]} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
+            </a>)}</div>
+        </details>}
+        {!portfolio && <a className="project-portfolio-link text-link" href={ctx.url('works')}>{t.allWorks}<ArrowUpRight size={16} /></a>}
       </article>;
     })}
   </div>;
@@ -122,12 +132,12 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
 function FacadeFeature({ ctx }: { ctx: Context }) {
   const service = services.find((item) => item.id === 'facade');
   const project = projects.find((item) => item.serviceId === 'facade');
-  if (!service || !project) return null;
+  const cover = project?.photos[0];
+  if (!service || !cover) return null;
   return <section className="facade-feature">
     <div className="wrap facade-grid">
       <figure>
-        <img src={ctx.media(project.after)} alt={project.text[ctx.lang].afterAlt} width="768" height={project.imageHeight ?? 512} loading="lazy" decoding="async" />
-        {project.demo && <figcaption>{ctx.t.demo}</figcaption>}
+        <img src={ctx.media('portfolio/' + cover.file)} alt={cover.alt[ctx.lang]} width={cover.width} height={cover.height} loading="lazy" decoding="async" />
       </figure>
       <div className="facade-copy">
         <p className="kicker">{service.text[ctx.lang].title}</p>
@@ -186,6 +196,7 @@ function Details({ ctx, compact = false }: { ctx: Context; compact?: boolean }) 
     {company.contactPerson[ctx.lang] && <div><dt>{ctx.t.contactPerson}</dt><dd>{company.contactPerson[ctx.lang]}</dd></div>}
     {ctx.t.details.map((name, i) => values[i] && !(compact && i === 2) ?
       <div key={name}><dt>{name}</dt><dd>{values[i]}</dd></div> : null)}
+    {whatsapp && <div><dt>WhatsApp</dt><dd><a href={whatsapp}>{ctx.t.whatsapp}</a></dd></div>}
   </dl>;
 }
 
@@ -197,6 +208,7 @@ function QuoteForm({ ctx }: { ctx: Context }) {
     data-required-message={f.invalidRequired} data-email-message={f.invalidEmail}>
     <h2>{f.title}</h2>
     {!formEndpoint && <p id="form-offline" className="form-note"><Info size={18} />{f.disabled}</p>}
+    {!formEndpoint && whatsapp && <a className="btn btn-whatsapp form-whatsapp" href={whatsapp}><MessageCircle size={18} />{t.whatsapp}</a>}
     <p className="form-required">{f.required}</p>
     <fieldset disabled={!formEndpoint} aria-describedby={formEndpoint ? undefined : 'form-offline'}>
       <input type="hidden" name="language" value={lang} />
@@ -229,6 +241,10 @@ function Contact({ ctx, page = false }: { ctx: Context; page?: boolean }) {
       <div className="contact-intro">
         <p className="kicker">{t.section.contact}</p>{page ? <h1>{t.contactTitle}</h1> : <h2>{t.contactTitle}</h2>}
         <p className="lead">{t.contactText}</p>
+        <div className="contact-actions">
+          {phone && <a className="btn" href={phone}><Phone size={18} />{t.call}</a>}
+          {whatsapp && <a className="btn btn-whatsapp" href={whatsapp}><MessageCircle size={18} />WhatsApp</a>}
+        </div>
         <Details ctx={ctx} />
       </div>
       <QuoteForm ctx={ctx} />
@@ -242,7 +258,7 @@ function Home({ ctx }: { ctx: Context }) {
     <section className="hero">
       <picture className="hero-photo">
         <source media="(max-width: 650px)" srcSet={ctx.media(company.hero.mobile || company.hero.image)} />
-        <img src={ctx.media(company.hero.image)} alt={t.heroAlt} width="1536" height="1024" fetchPriority="high" />
+        <img src={ctx.media(company.hero.image)} alt={t.heroAlt} width={company.hero.width} height={company.hero.height} fetchPriority="high" />
       </picture>
       <div className="hero-shade"></div>
       <div className="wrap hero-content">
@@ -293,6 +309,7 @@ function ServicePage({ ctx, service }: { ctx: Context; service: Service }) {
   const { t } = ctx;
   const { title, summary, intro, scope, additionalScope } = service.text[ctx.lang];
   const project = projects.find((item) => item.serviceId === service.id);
+  const cover = project?.photos[0];
   return <>
     <PageHeading ctx={ctx} label={t.section.services} title={title} description={summary} />
     <div className="section wrap detail-grid">
@@ -309,9 +326,9 @@ function ServicePage({ ctx, service }: { ctx: Context; service: Service }) {
       </article>
       <aside className="detail-aside"><h2>{t.allServices}</h2>
         <ul>{services.map((item) => <li key={item.id}><a href={ctx.url(item)} aria-current={item === service ? 'page' : undefined}>{item.text[ctx.lang].title}<ArrowRight size={15} /></a></li>)}</ul>
-        {project && <figure className="service-example">
-          <img src={ctx.media(project.after)} alt={project.text[ctx.lang].afterAlt} width="768" height={project.imageHeight ?? 512} loading="lazy" decoding="async" />
-          <figcaption>{project.demo ? t.demo : project.text[ctx.lang].title}</figcaption>
+        {project && cover && <figure className="service-example">
+          <img src={ctx.media('portfolio/' + cover.file)} alt={cover.alt[ctx.lang]} width={cover.width} height={cover.height} loading="lazy" decoding="async" />
+          <figcaption>{project.text[ctx.lang].title}</figcaption>
         </figure>}
       </aside>
     </div>
@@ -374,6 +391,13 @@ export function App({ lang, route, base }: { lang: Language; route: Route; base:
     <Header ctx={ctx} base={base} />
     <main id="main" tabIndex={-1}><PageBody ctx={ctx} /></main>
     <Footer ctx={ctx} />
-    {phone && <a className="mobile-call" href={phone} aria-label={ctx.t.call + ' ' + company.phone}><Phone size={23} /></a>}
+    <div className="mobile-contact">
+      {whatsapp && <a className="mobile-whatsapp" href={whatsapp} aria-label={ctx.t.whatsapp}><MessageCircle size={23} /></a>}
+      {phone && <a className="mobile-call" href={phone} aria-label={ctx.t.call + ' ' + company.phone}><Phone size={23} /></a>}
+    </div>
+    <dialog id="photo-viewer" aria-label={ctx.t.viewPhoto}>
+      <div className="viewer-toolbar"><p id="photo-caption"></p><button type="button" data-close-viewer aria-label={ctx.t.closePhoto}><X size={25} /></button></div>
+      <img alt="" />
+    </dialog>
   </>;
 }

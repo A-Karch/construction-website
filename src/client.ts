@@ -20,6 +20,29 @@ menu?.addEventListener('keydown', (event) => {
   menu.querySelector('summary')?.focus();
 });
 
+const viewer = document.querySelector<HTMLDialogElement>('#photo-viewer');
+const viewerImage = viewer?.querySelector<HTMLImageElement>('img');
+const viewerCaption = viewer?.querySelector<HTMLElement>('#photo-caption');
+if (viewer && viewerImage && viewerCaption) {
+  let photoTrigger: HTMLAnchorElement | null = null;
+  document.querySelectorAll<HTMLAnchorElement>('[data-gallery-photo]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      photoTrigger = link;
+      viewerImage.src = link.href;
+      viewerImage.alt = link.querySelector('img')?.alt || '';
+      viewerCaption.textContent = viewerImage.alt;
+      viewer.showModal();
+    });
+  });
+  viewer.querySelector('[data-close-viewer]')?.addEventListener('click', () => viewer.close());
+  viewer.addEventListener('close', () => photoTrigger?.focus({ preventScroll: true }));
+  viewer.addEventListener('click', (event) => {
+    if (event.target === viewer) viewer.close();
+  });
+}
+
 const form = document.querySelector<HTMLFormElement>('.quote-form');
 if (form) {
   const requestedService = new URLSearchParams(location.search).get('service');

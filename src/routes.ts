@@ -5,7 +5,7 @@ export type Page = keyof typeof copy.et.pages;
 export type Route = Page | Service;
 
 export const services = company.services.filter((service) => company.preview || service.confirmed);
-export const projects = company.projects.filter((project) => company.preview || !project.demo);
+export const projects = company.projects;
 export const pages: Page[] = ['home', 'services', 'works', 'about', 'contact', 'privacy', 'missing'];
 export const navigation = ['home', 'services', 'works', 'about', 'contact'] as const;
 export const navLabels = {

@@ -17,6 +17,10 @@ type Copy = {
   learn: string;
   allServices: string;
   allWorks: string;
+  whatsapp: string;
+  photos: string;
+  viewPhoto: string;
+  closePhoto: string;
   similarProject: string;
   relatedWork: string;
   facadeTitle: string;
@@ -31,10 +35,7 @@ type Copy = {
   section: { services: string; works: string; about: string; process: string; contact: string };
   serviceNote: string;
   scope: string;
-  demo: string;
   empty: string;
-  before: string;
-  after: string;
   approachTitle: string;
   approachText: string;
   approach: [string, string][];
@@ -61,7 +62,7 @@ export const copy: Localized<Copy> = {
     pages: {
       home: ['', 'Ehitus- ja renoveerimistööd Eestis', 'Ehitus, remont ja siseviimistlus Eestis. Tutvu tööde liikide ja näidetega ning vaata, kuidas ehitusprojekti kavandada.'],
       services: ['teenused', 'Ehitusteenused', 'Üldehituse, koduremondi, siseviimistluse, fassaadi, katuse ja rekonstrueerimise tööde ülevaade.'],
-      works: ['tood', 'Projektid', 'Vaata enne ja pärast, kuidas võiksid muutuda soojustatud kivimaja, remonditud korter ning uue fassaadi ja katusega puitmaja.'],
+      works: ['tood', 'Projektid', 'Fotod katuseehitusest, siseseinte plaatimisest ning puitterrassi ja astmete paigaldusest.'],
       about: ['meist', 'Meist', 'Ehituse, fassaaditööde ja remondi kavandamine Eestis. Täpsustame tööde ulatust ja järjekorda enne alustamist.'],
       contact: ['kontakt', 'Kontakt ja hinnapäring', 'Vaata kontaktandmeid ning loe, milline info aitab sinu ehitus- või remondiprojekti hinnata.'],
       privacy: ['privaatsus', 'Privaatsuspoliitika', 'Kuidas käsitletakse ehituspäringute andmeid ja salvestatakse keelevalik.'],
@@ -70,7 +71,7 @@ export const copy: Localized<Copy> = {
     brand: 'Ehitusettevõte',
     sector: 'EHITUS JA RENOVEERIMINE',
     preview: 'Demo',
-    previewText: 'Projektipildid on illustratiivsed.',
+    previewText: 'Veebilehe eelvaade.',
     skip: 'Liigu põhisisu juurde',
     nav: 'Põhinavigatsioon',
     language: 'Keel',
@@ -80,11 +81,15 @@ export const copy: Localized<Copy> = {
     learn: 'Vaata lähemalt',
     allServices: 'Kõik teenused',
     allWorks: 'Vaata projekte',
+    whatsapp: 'Kirjuta WhatsAppis',
+    photos: 'fotot',
+    viewPhoto: 'Vaata fotot suuremalt',
+    closePhoto: 'Sulge foto',
     similarProject: 'Arutame sarnast projekti',
     relatedWork: 'Vaata tööde kirjeldust',
     facadeTitle: 'Fassaadi soojustamine ja viimistlus',
     facadeText: 'Soojustusplaadid, armeeritud krohvikiht ja viimistluskrohv moodustavad tervikliku süsteemi. Enne lahenduse valikut vaatame üle aluspinna, sokli ja aknaümbrused.',
-    aboutIntro: 'BOIKU Ehitus tegeleb ehituse, fassaadide ja remondiga Eestis. Alustame sinu soovidest ja hoone seisukorrast ning paneme nende põhjal paika tööde ulatuse ja järjekorra.',
+    aboutIntro: 'DISILENA OÜ tegeleb ehituse, fassaadide ja remondiga Eestis. Alustame sinu soovidest ja hoone seisukorrast ning paneme nende põhjal paika tööde ulatuse ja järjekorra.',
     faqTitle: 'Enne tööde alustamist',
     faq: [
       ['Mida hinnapäringusse kirjutada?', 'Lisa objekti asukoht, tööde kirjeldus, ligikaudne pindala ja soovitud ajaraam. Märgi ka, kas ruume kasutatakse tööde ajal.'],
@@ -93,16 +98,13 @@ export const copy: Localized<Copy> = {
       ['Kas remonti saab jagada etappideks?', 'Jah, etappide võimalust saab arutada tööde planeerimisel. Oluline on arvestada ruumide kasutamise, tolmu tekitavate tööde ja järgmiste etappide eeldustega.'],
     ],
     overview: 'Vali töö, millest soovid rohkem teada. Konkreetne tööde ulatus sõltub hoone seisukorrast ja projektist.',
-    homeHero: ['Professionaalsed ehitus- ja renoveerimistööd Eestis', 'Fassaadi soojustamine, kodu remont ja siseviimistlus. Lepime tööde ulatuse kokku enne alustamist.', 'EHITUS · FASSAADID · REMONT'],
-    heroAlt: 'Mändide vahel asuv moodne puitmaja tumeda katusega',
+    homeHero: ['Professionaalsed ehitus- ja renoveerimistööd Eestis', 'Sisekrohvimine MP 75-ga, maalritööd ja laeliistude paigaldus. Samuti fassaadi-, remondi- ja katusetööd.', 'KATUS · KROHV · VIIMISTLUS'],
+    heroAlt: 'Maja paigaldatud metallkatuse ja ehitustellingutega',
     imageNote: 'Illustratiivne pilt',
-    section: { services: 'MIDA TEEME', works: 'ENNE JA PÄRAST', about: 'MEIE LÄHENEMINE', process: 'TÖÖDE KÄIK', contact: 'VÕTA ÜHENDUST' },
+    section: { services: 'MIDA TEEME', works: 'MEIE TÖÖD', about: 'MEIE LÄHENEMINE', process: 'TÖÖDE KÄIK', contact: 'VÕTA ÜHENDUST' },
     serviceNote: 'Teenuste nimekiri on esialgne.',
     scope: 'Mida töö võib hõlmata',
-    demo: 'NÄIDISPROJEKT',
     empty: 'Projektide fotod lisatakse hiljem.',
-    before: 'Enne',
-    after: 'Pärast',
     approachTitle: 'Selged kokkulepped enne töö algust',
     approachText: 'Hea lähteülesanne kirjeldab nii soovitud tulemust kui ka seda, millised tööd hinnapakkumisse kuuluvad. Nii on lihtsam võrrelda lahendusi ja hinnata muudatuste mõju.',
     approach: [
@@ -144,7 +146,7 @@ export const copy: Localized<Copy> = {
     pages: {
       home: ['', 'Строительство и ремонт в Эстонии', 'Строительные и ремонтные работы в Эстонии. Виды работ, примеры до и после, этапы подготовки строительного проекта.'],
       services: ['uslugi', 'Строительные услуги', 'Общестроительные работы, ремонт, внутренняя отделка, фасады, кровля и реконструкция.'],
-      works: ['raboty', 'Портфолио', 'Утепление каменного дома, ремонт квартиры и обновление деревянного фасада. Посмотрите, как могут измениться объекты после работ.'],
+      works: ['raboty', 'Портфолио', 'Фотографии кровельных работ, внутренней обшивки стен и деревянной террасы со ступенями.'],
       about: ['o-kompanii', 'О компании', 'Строительство, фасадные работы и ремонт в Эстонии. Объём и порядок работ обсуждаем до начала проекта.'],
       contact: ['kontakty', 'Контакты и запрос сметы', 'Контактные данные и список сведений, которые помогут оценить ваш проект строительства или ремонта.'],
       privacy: ['konfidencialnost', 'Политика конфиденциальности', 'Как обрабатываются данные из заявок и сохраняется выбор языка.'],
@@ -153,7 +155,7 @@ export const copy: Localized<Copy> = {
     brand: 'Строительная компания',
     sector: 'СТРОИТЕЛЬСТВО И РЕМОНТ',
     preview: 'Демо',
-    previewText: 'Изображения проектов иллюстративные.',
+    previewText: 'Предпросмотр сайта.',
     skip: 'Перейти к содержанию',
     nav: 'Основная навигация',
     language: 'Язык',
@@ -163,11 +165,15 @@ export const copy: Localized<Copy> = {
     learn: 'Подробнее',
     allServices: 'Все услуги',
     allWorks: 'Смотреть проекты',
+    whatsapp: 'Написать в WhatsApp',
+    photos: 'фото',
+    viewPhoto: 'Увеличить фото',
+    closePhoto: 'Закрыть фото',
     similarProject: 'Обсудить похожий проект',
     relatedWork: 'Подробнее об этих работах',
     facadeTitle: 'Утепление и отделка фасадов',
     facadeText: 'Утеплитель, армированный штукатурный слой и декоративная отделка работают как единая система. Перед выбором решения осматриваем основание, цоколь и примыкания к окнам.',
-    aboutIntro: 'BOIKU Ehitus — строительство, фасадные работы и ремонт в Эстонии. Начинаем с ваших пожеланий и состояния объекта, затем определяем объём и последовательность работ.',
+    aboutIntro: 'DISILENA OÜ — строительство, фасадные работы и ремонт в Эстонии. Начинаем с ваших пожеланий и состояния объекта, затем определяем объём и последовательность работ.',
     faqTitle: 'Перед началом работ',
     faq: [
       ['Что указать в запросе сметы?', 'Напишите, где находится объект, какие работы нужны, примерную площадь и желаемые сроки. Укажите, будете ли вы пользоваться помещением во время ремонта.'],
@@ -176,16 +182,13 @@ export const copy: Localized<Copy> = {
       ['Можно ли разбить ремонт на этапы?', 'Возможность работать по этапам обсуждаем при планировании. Учитываем использование помещений, пыльные работы и то, какие работы нужно закончить перед следующим этапом.'],
     ],
     overview: 'Выберите интересующий вид работ. Конкретный объём зависит от состояния объекта и требований проекта.',
-    homeHero: ['Профессиональное строительство и ремонт в Эстонии', 'Утепление фасадов, ремонт домов и квартир, внутренняя отделка. Согласовываем объём работ до начала проекта.', 'СТРОИТЕЛЬСТВО · ФАСАДЫ · РЕМОНТ'],
-    heroAlt: 'Современный деревянный дом с тёмной крышей среди сосен',
+    homeHero: ['Профессиональное строительство и ремонт в Эстонии', 'Внутренняя штукатурка МП-75, малярные работы и поклейка галтелей. Фасады, ремонт и кровельные работы.', 'КРОВЛЯ · ШТУКАТУРКА · ОТДЕЛКА'],
+    heroAlt: 'Дом с установленной металлической кровлей и строительными лесами',
     imageNote: 'Иллюстрация',
-    section: { services: 'ЧЕМ ЗАНИМАЕМСЯ', works: 'ДО И ПОСЛЕ', about: 'НАШ ПОДХОД', process: 'ЭТАПЫ РАБОТЫ', contact: 'СВЯЖИТЕСЬ С НАМИ' },
+    section: { services: 'ЧЕМ ЗАНИМАЕМСЯ', works: 'НАШИ РАБОТЫ', about: 'НАШ ПОДХОД', process: 'ЭТАПЫ РАБОТЫ', contact: 'СВЯЖИТЕСЬ С НАМИ' },
     serviceNote: 'Предварительный перечень услуг.',
     scope: 'Что может входить в работы',
-    demo: 'ПРИМЕР ПРОЕКТА',
     empty: 'Фотографии объектов появятся позже.',
-    before: 'До',
-    after: 'После',
     approachTitle: 'Договариваемся об объёме до начала работ',
     approachText: 'В задании стоит описать желаемый результат и перечислить работы, которые должны войти в смету. Это помогает сравнить решения и оценить последствия изменений.',
     approach: [
@@ -227,7 +230,7 @@ export const copy: Localized<Copy> = {
     pages: {
       home: ['', 'Construction and renovation in Estonia', 'Construction and renovation in Estonia. Explore building services, before and after examples and the steps involved in planning a project.'],
       services: ['services', 'Construction services', 'Explore general construction, home renovation, interior finishing, façade work, roofing and reconstruction.'],
-      works: ['projects', 'Portfolio', 'Explore before and after examples of rendered wall insulation, an apartment renovation and a timber house with renewed cladding and roofing.'],
+      works: ['projects', 'Portfolio', 'Photos of roof installation, interior wall boarding and a timber terrace with steps.'],
       about: ['about', 'About us', 'Building, façade work and renovation in Estonia, with the scope and sequence agreed before work starts.'],
       contact: ['contact', 'Contact and quote requests', 'Find contact details and see what to include when asking for an estimate for construction or renovation.'],
       privacy: ['privacy', 'Privacy policy', 'How enquiries are handled and how the site stores your choice of language.'],
@@ -236,7 +239,7 @@ export const copy: Localized<Copy> = {
     brand: 'Construction Company',
     sector: 'CONSTRUCTION & RENOVATION',
     preview: 'Demo',
-    previewText: 'Project images are illustrative.',
+    previewText: 'Website preview.',
     skip: 'Skip to content',
     nav: 'Main navigation',
     language: 'Language',
@@ -246,11 +249,15 @@ export const copy: Localized<Copy> = {
     learn: 'Learn more',
     allServices: 'All services',
     allWorks: 'View projects',
+    whatsapp: 'Chat on WhatsApp',
+    photos: 'photos',
+    viewPhoto: 'Enlarge photo',
+    closePhoto: 'Close photo',
     similarProject: 'Discuss a similar project',
     relatedWork: 'Explore this type of work',
     facadeTitle: 'External wall insulation and finishing',
     facadeText: 'Insulation boards, reinforced render and the decorative finish work together as one system. We review the substrate, plinth and window junctions before choosing an approach.',
-    aboutIntro: 'BOIKU Ehitus brings together construction, façade work and renovation in Estonia. We start with your plans and the condition of the property, then work out the scope and sequence.',
+    aboutIntro: 'DISILENA OÜ brings together construction, façade work and renovation in Estonia. We start with your plans and the condition of the property, then work out the scope and sequence.',
     faqTitle: 'Before work begins',
     faq: [
       ['What should I include in a quote request?', 'Tell us the location, the work you need, the approximate area and your preferred timeframe. Mention whether the property will be occupied during the work.'],
@@ -259,16 +266,13 @@ export const copy: Localized<Copy> = {
       ['Can renovation be carried out in stages?', 'Phasing can be discussed during planning. It needs to account for occupied rooms, dusty work and the tasks that must be finished before the next stage.'],
     ],
     overview: 'Choose a type of work to explore. The scope depends on the condition of the property and the requirements of your project.',
-    homeHero: ['Professional construction and renovation in Estonia', 'External wall insulation, home renovations and interior finishing. We agree the scope before work starts.', 'CONSTRUCTION · FAÇADES · RENOVATION'],
-    heroAlt: 'Modern timber house with a dark roof among pine trees',
+    homeHero: ['Professional construction and renovation in Estonia', 'MP 75 interior plastering, painting and ceiling cornices. Façade work, renovation and roofing.', 'ROOFING · PLASTERING · FINISHING'],
+    heroAlt: 'House with an installed metal roof and scaffolding',
     imageNote: 'Illustrative image',
-    section: { services: 'WHAT WE DO', works: 'BEFORE & AFTER', about: 'OUR APPROACH', process: 'THE PROCESS', contact: 'GET IN TOUCH' },
+    section: { services: 'WHAT WE DO', works: 'OUR WORK', about: 'OUR APPROACH', process: 'THE PROCESS', contact: 'GET IN TOUCH' },
     serviceNote: 'Provisional list of services.',
     scope: 'What the work may include',
-    demo: 'ILLUSTRATIVE PROJECT',
     empty: 'Project photos will be added later.',
-    before: 'Before',
-    after: 'After',
     approachTitle: 'Agree the scope before work starts',
     approachText: 'A clear brief describes the result you want and the work the quote should cover. That makes it easier to compare options and understand the impact of changes.',
     approach: [

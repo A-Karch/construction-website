@@ -18,15 +18,36 @@ export type Service = {
 type Project = {
   id: string;
   serviceId: string;
-  demo: boolean;
-  before: string;
-  after: string;
-  imageHeight?: number;
   location: string;
-  text: Localized<{ title: string; category: string; description: string; beforeAlt: string; afterAlt: string; scope?: string[] }>;
+  photos: { file: string; width: number; height: number; alt: Localized }[];
+  text: Localized<{ title: string; category: string; description: string; scope: string[] }>;
 };
 
 const services: Service[] = [
+  {
+    id: 'plastering', confirmed: true,
+    text: {
+      et: { slug: 'sisekrohvimine-mp75', title: 'Sisekrohvimine MP 75', summary: 'Siseseinte ja lagede krohvimine Knauf MP 75 kipskrohviga.', intro: 'Sisekrohvimine tasandab seinte ja lagede pinda enne järgnevat viimistlust. Enne MP 75 paigaldamist hinnatakse aluspinna sobivust, määratakse vajalik ettevalmistus ning lepitakse kokku viimistluse järgmised etapid.', scope: ['Aluspinna ülevaatus ja ettevalmistamine', 'Nurkade ja liitekohtade ettevalmistus', 'MP 75 krohvi paigaldamine ja tasandamine', 'Pinna ettevalmistus järgmiseks viimistlusetapiks'] },
+      ru: { slug: 'vnutrennyaya-shtukaturka-mp75', title: 'Внутренняя штукатурка МП-75', summary: 'Штукатурка внутренних стен и потолков гипсовой смесью Knauf MP 75.', intro: 'Внутренняя штукатурка выравнивает стены и потолки перед последующей отделкой. Перед нанесением MP 75 оцениваем основание, определяем нужную подготовку и согласовываем следующие этапы работ.', scope: ['Осмотр и подготовка основания', 'Подготовка углов и примыканий', 'Нанесение и выравнивание штукатурки MP 75', 'Подготовка поверхности к следующему этапу отделки'] },
+      en: { slug: 'interior-plastering-mp75', title: 'Interior plastering with MP 75', summary: 'Interior wall and ceiling plastering with Knauf MP 75 gypsum plaster.', intro: 'Interior plastering levels walls and ceilings before subsequent finishing. Before applying MP 75, we assess the substrate, identify the preparation required and agree the next finishing stages.', scope: ['Inspecting and preparing the substrate', 'Preparing corners and junctions', 'Applying and levelling MP 75 plaster', 'Preparing the surface for the next finishing stage'] },
+    },
+  },
+  {
+    id: 'painting', confirmed: true,
+    text: {
+      et: { slug: 'maalritood', title: 'Maalritööd', summary: 'Seinte ja lagede ettevalmistamine, pahteldamine ning värvimine.', intro: 'Maalritööde ulatus sõltub aluspinna seisukorrast ja soovitud viimistlusest. Vaatame üle pinna parandamise vajaduse ning lepime kokku värvitooni, materjalid ja kaetavad pinnad.', scope: ['Ruumide ja säilitatavate pindade kaitsmine', 'Pahteldamine ja lihvimine vastavalt vajadusele', 'Kruntimine ning seinte ja lagede värvimine', 'Liitekohtade ja servade viimistlemine'] },
+      ru: { slug: 'malyarnye-raboty', title: 'Малярные работы', summary: 'Подготовка, шпаклевание и окраска стен и потолков.', intro: 'Объём малярных работ зависит от состояния основания и выбранного финишного покрытия. Осматриваем поверхности, определяем подготовку, согласовываем оттенки и материалы.', scope: ['Защита помещения и сохраняемых поверхностей', 'Шпаклевание и шлифование по состоянию основания', 'Грунтование и окраска стен и потолков', 'Отделка примыканий и краёв'] },
+      en: { slug: 'painting', title: 'Painting and decorating', summary: 'Preparing, filling and painting interior walls and ceilings.', intro: 'The scope of painting depends on the substrate and the chosen finish. We inspect the surfaces, identify the preparation needed and agree the colours and materials.', scope: ['Protecting the room and retained surfaces', 'Filling and sanding as required', 'Priming and painting walls and ceilings', 'Finishing edges and junctions'] },
+    },
+  },
+  {
+    id: 'cornices', confirmed: true,
+    text: {
+      et: { slug: 'laeliistude-paigaldus', title: 'Laeliistude paigaldus', summary: 'Dekoratiivsete laeliistude liimimine seinte ja lagede liitekohtadesse.', intro: 'Laeliistud viimistlevad seina ja lae liitekoha. Enne paigaldust lepime kokku liistu profiili ja materjali ning vaatame üle aluspinna ja nurgad.', scope: ['Liistu profiili ja materjali valik', 'Liitekoha ettevalmistamine ja mõõtmine', 'Liistude lõikamine ning liimimine', 'Nurkade ja liitekohtade viimistlemine'] },
+      ru: { slug: 'pokleyka-galteley', title: 'Поклейка галтелей', summary: 'Монтаж декоративных потолочных галтелей на стыках стен и потолка.', intro: 'Галтели оформляют примыкание стены к потолку. До монтажа согласовываем профиль и материал, проверяем основание и углы помещения.', scope: ['Подбор профиля и материала галтелей', 'Подготовка и разметка примыканий', 'Подрезка и приклеивание галтелей', 'Отделка углов и стыков'] },
+      en: { slug: 'ceiling-cornices', title: 'Ceiling cornice installation', summary: 'Fitting decorative ceiling coving at wall and ceiling junctions.', intro: 'Ceiling cornices finish the junction between the wall and ceiling. Before installation, we agree the profile and material and inspect the substrate and room corners.', scope: ['Choosing the cornice profile and material', 'Preparing and marking the junctions', 'Cutting and bonding the cornices', 'Finishing corners and joints'] },
+    },
+  },
   {
     id: 'facade', confirmed: false,
     text: {
@@ -124,38 +145,56 @@ const services: Service[] = [
 
 const projects: Project[] = [
   {
-    id: 'rendered-facade', serviceId: 'facade', demo: true, before: 'rendered-facade-before.webp', after: 'rendered-facade-after.webp', imageHeight: 768, location: '',
+    id: 'standing-seam-roof', serviceId: 'roof', location: '',
     text: {
-      et: { title: 'Kivimaja soojustatud fassaad', category: 'Soojustus ja krohv', description: 'Krohvikatte uuendamise näide, kus soojustus ja hele viimistlus jätavad alles maja tumeda katuse ning olemasoleva aknajaotuse.', beforeAlt: 'Kulunud halli krohviga kahekorruseline kivimaja', afterAlt: 'Sama kivimaja heleda viimistluskrohvi ja tumeda sokliga', scope: ['Soojustusplaadid', 'Armeeritud aluskrohv', 'Viimistluskrohv'] },
-      ru: { title: 'Мокрый фасад каменного дома', category: 'Утепление и штукатурка', description: 'Пример наружного утепления со светлой декоративной штукатуркой и тёмным цоколем. Кровля и расположение окон остаются прежними.', beforeAlt: 'Двухэтажный каменный дом со старой серой штукатуркой', afterAlt: 'Тот же дом со светлой декоративной штукатуркой и тёмным цоколем', scope: ['Монтаж утеплителя', 'Армирование сеткой', 'Декоративная штукатурка'] },
-      en: { title: 'Rendered insulation for a masonry home', category: 'Insulation and render', description: 'An example of external wall insulation with light decorative render and a dark plinth. The roof and window layout stay as they were.', beforeAlt: 'Two-storey masonry house with weathered grey render', afterAlt: 'The same house with light decorative render and a dark plinth', scope: ['Insulation boards', 'Reinforced base coat', 'Decorative render'] },
+      et: { title: 'Valtskatuse paigaldus', category: 'Katusetööd', description: 'Maja katuse ehitusetapid sarikatest roovituse ja metallkatte paigaldamiseni.', scope: ['Katusekonstruktsioon', 'Roovitus', 'Metallkate'] },
+      ru: { title: 'Монтаж фальцевой кровли', category: 'Кровельные работы', description: 'Этапы устройства кровли дома — от стропильной конструкции и обрешётки до монтажа металлического покрытия.', scope: ['Стропильная конструкция', 'Обрешётка', 'Металлическая кровля'] },
+      en: { title: 'Standing-seam roof installation', category: 'Roofing', description: 'Stages of a house roof, from the roof structure and battens to installation of the metal covering.', scope: ['Roof structure', 'Battens', 'Metal roofing'] },
     },
+    photos: [
+      { file: 'roof-completed.webp', width: 1600, height: 721, alt: { et: 'Paigaldatud tume metallkatus ja maja ees olevad tellingud', ru: 'Установленная металлическая кровля и строительные леса перед домом', en: 'Installed dark metal roof and scaffolding in front of the house' } },
+      { file: 'roof-structure.webp', width: 1600, height: 720, alt: { et: 'Maja katuse sarikakonstruktsioon ehituse ajal', ru: 'Стропильная конструкция дома в процессе строительства', en: 'The roof structure during construction' } },
+      { file: 'roof-overview.webp', width: 1600, height: 720, alt: { et: 'Osaliselt paigaldatud metallkattega maja üldvaade', ru: 'Общий вид дома с частично установленным кровельным покрытием', en: 'House with the metal roof covering partly installed' } },
+      { file: 'roof-detail.webp', width: 1600, height: 720, alt: { et: 'Puidust roovitus ja paigaldatavad metallkatuse paanid', ru: 'Деревянная обрешётка и монтаж металлических кровельных панелей', en: 'Timber battens and metal roofing panels being installed' } },
+      { file: 'roof-reflection-clean.webp', width: 1600, height: 720, alt: { et: 'Roovituse ja metallkatte liitumine katuse ehitamisel', ru: 'Обрешётка и металлическое покрытие на скате кровли', en: 'Battens and metal covering on the roof slope' } },
+      { file: 'roof-side.webp', width: 1600, height: 721, alt: { et: 'Maja külgvaade katusekatte paigaldamise ajal', ru: 'Вид дома сбоку в процессе монтажа кровли', en: 'Side view of the house during roof installation' } },
+    ],
   },
   {
-    id: 'apartment', serviceId: 'renovation', demo: true, before: 'apartment-before.webp', after: 'apartment-after.webp', location: '',
+    id: 'interior-boarding', serviceId: 'interior', location: '',
     text: {
-      et: { title: 'Valgusküllane korter', category: 'Korteri remont', description: 'Näide, kuidas taastatud seinad ja tammeparkett muudavad vana elutoa ilmet.', beforeAlt: 'Krohvimata seinte ja palja põrandaga elutuba', afterAlt: 'Tammeparketi ja heleda seinaviimistlusega elutuba', scope: ['Seinte ettevalmistus', 'Siseviimistlus', 'Parkett'] },
-      ru: { title: 'Светлая квартира', category: 'Ремонт квартиры', description: 'Пример того, как восстановленные стены и дубовый паркет меняют интерьер старой гостиной.', beforeAlt: 'Гостиная с необработанными стенами и черновым полом', afterAlt: 'Гостиная с дубовым паркетом и светлыми стенами', scope: ['Подготовка стен', 'Чистовая отделка', 'Укладка паркета'] },
-      en: { title: 'A light-filled apartment', category: 'Apartment renovation', description: 'An example of how restored walls and oak parquet can transform an older living room.', beforeAlt: 'Living room with unfinished walls and bare floor', afterAlt: 'Living room with oak parquet and light walls', scope: ['Wall preparation', 'Interior finishing', 'Parquet flooring'] },
+      et: { title: 'Siseseinte plaatimine', category: 'Sisetööd', description: 'Kõrge kaldlaega ruumi siseseinte ehitus ja kipsplaatide paigaldamine.', scope: ['Seinaplaadid', 'Kipsplaat', 'Aknaümbrused'] },
+      ru: { title: 'Внутренняя обшивка стен', category: 'Внутренние работы', description: 'Устройство внутренней обшивки и монтаж гипсокартона в помещении с высоким наклонным потолком.', scope: ['Обшивка стен', 'Монтаж гипсокартона', 'Оконные проёмы'] },
+      en: { title: 'Interior wall boarding', category: 'Interior work', description: 'Internal wall boarding and plasterboard installation in a room with a high sloping ceiling.', scope: ['Wall boarding', 'Plasterboard', 'Window openings'] },
     },
+    photos: [
+      { file: 'interior-front.webp', width: 1600, height: 800, alt: { et: 'Kipsplaatide paigaldus kõrges ruumis', ru: 'Монтаж гипсокартона в помещении с высоким потолком', en: 'Plasterboard installation in a room with a high ceiling' } },
+      { file: 'interior-wide.webp', width: 1600, height: 800, alt: { et: 'Seinaplaadid ja aknaavad sisetööde käigus', ru: 'Обшивка стен и оконные проёмы в процессе внутренних работ', en: 'Wall boarding and window openings during interior work' } },
+      { file: 'interior-portrait.webp', width: 700, height: 1400, alt: { et: 'Tellingud ning seinale paigaldatavad kipsplaadid', ru: 'Строительные подмости и гипсокартонная обшивка стены', en: 'Access tower and plasterboard wall lining' } },
+    ],
   },
   {
-    id: 'house', serviceId: 'roof', demo: true, before: 'house-before.webp', after: 'house-after.webp', location: '',
+    id: 'timber-terrace', serviceId: 'building', location: '',
     text: {
-      et: { title: 'Puitmaja uus ilme', category: 'Fassaad ja katus', description: 'Näide puitfassaadi ja katuse uuendamisest, mis säilitab maja algse mahu.', beforeAlt: 'Kulunud laudise ja katusega puitmaja', afterAlt: 'Uue puitvoodri ja tumeda valtskatusega maja', scope: ['Puitvooder', 'Valtskatus', 'Aknaümbrused'] },
-      ru: { title: 'Новый облик деревянного дома', category: 'Фасад и кровля', description: 'Пример обновления деревянного фасада и кровли с сохранением объёма дома.', beforeAlt: 'Деревянный дом с изношенной обшивкой и кровлей', afterAlt: 'Дом с новой деревянной обшивкой и тёмной фальцевой кровлей', scope: ['Деревянная обшивка', 'Фальцевая кровля', 'Отделка оконных проёмов'] },
-      en: { title: 'A timber house renewed', category: 'Façade and roof', description: 'A façade and roof update that retains the original shape of the timber house.', beforeAlt: 'Timber house with weathered cladding and roof', afterAlt: 'House with renewed timber cladding and a dark standing-seam roof', scope: ['Timber cladding', 'Standing-seam roof', 'Window surrounds'] },
+      et: { title: 'Puitterrass ja trepiastmed', category: 'Puidutööd', description: 'Soonelise terrassilaua paigaldus koos astmete ja nurgaühendustega.', scope: ['Terrassilaud', 'Trepiastmed', 'Nurgaühendused'] },
+      ru: { title: 'Деревянная терраса и ступени', category: 'Работы с деревом', description: 'Укладка рифлёной террасной доски, устройство ступеней и оформление угловых стыков.', scope: ['Террасная доска', 'Ступени', 'Угловые стыки'] },
+      en: { title: 'Timber terrace and steps', category: 'Timber work', description: 'Grooved decking boards with matching steps and mitred corner joints.', scope: ['Decking boards', 'Steps', 'Corner joints'] },
     },
+    photos: [
+      { file: 'terrace-detail.webp', width: 1600, height: 800, alt: { et: 'Terrassi nurk ja astmete laudise ühendused', ru: 'Угол деревянной террасы и стыки настила ступеней', en: 'Terrace corner and decking joints on the steps' } },
+      { file: 'terrace-overview.webp', width: 700, height: 1400, alt: { et: 'Maja sissepääsu puidust terrass ja astmed', ru: 'Деревянная терраса со ступенями у входа в дом', en: 'Timber terrace and steps at the house entrance' } },
+    ],
   },
 ];
 
 // Set preview to false only after reviewing the launch checklist.
 export const company = {
   preview: true,
-  name: 'BOIKU Ehitus',
-  logo: 'boiku-mark.svg',
+  name: 'DISILENA OÜ',
+  logo: 'disilena-mark.svg',
   contactPerson: { et: 'Silvestr Boiku', ru: 'Сильвестр Бойку', en: 'Silvestr Boiku' } as Localized,
-  phone: '',
+  phone: '+372 5427 0045',
+  whatsapp: '+372 5427 0045',
   email: '',
   address: '',
   serviceAreas: [] as string[],
@@ -165,7 +204,7 @@ export const company = {
   searchConsoleVerification: '',
   formspreeId: '',
   privacyPolicy: null as Localized<[string, string][]> | null,
-  hero: { image: 'hero.webp', mobile: 'hero-mobile.webp', social: 'boiku-social.jpg', demo: true },
+  hero: { image: 'portfolio/roof-completed.webp', mobile: 'portfolio/roof-completed.webp', social: 'disilena-social.jpg', width: 1600, height: 721, demo: false },
   services,
   projects,
 };
