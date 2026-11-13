@@ -414,8 +414,8 @@ export function App({ lang, route, base }: { lang: Language; route: Route; base:
     <main id="main" tabIndex={-1}><PageBody ctx={ctx} /></main>
     <Footer ctx={ctx} />
     <div className="mobile-contact">
-      {whatsapp && <a className="mobile-whatsapp" href={whatsapp} aria-label={ctx.t.whatsapp}><MessageCircle size={23} /></a>}
-      {phone && <a className="mobile-call" href={phone} aria-label={ctx.t.call + ' ' + company.phone}><Phone size={23} /></a>}
+      {whatsapp && <a className="mobile-whatsapp" href={whatsapp} aria-label={'WhatsApp · ' + company.whatsapp}><MessageCircle size={23} /><span>WhatsApp</span></a>}
+      {phone && <a className="mobile-call" href={phone} aria-label={ctx.t.call + ' ' + company.phone}><Phone size={23} /><span>{ctx.t.call}</span></a>}
     </div>
     <dialog id="photo-viewer" aria-label={ctx.t.viewPhoto}>
       <div className="viewer-toolbar"><p id="photo-caption"></p><button type="button" data-close-viewer aria-label={ctx.t.closePhoto}><X size={25} /></button></div>
