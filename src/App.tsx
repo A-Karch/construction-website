@@ -41,7 +41,6 @@ function Header({ ctx, base }: { ctx: Context; base: string }) {
   const { t, lang, route } = ctx;
   return <>
     <a className="skip" href="#main">{t.skip}</a>
-    {company.preview && <div className="preview-strip"><div className="wrap"><span>{t.preview}</span>{t.previewText}</div></div>}
     <header className="site-header">
       <div className="wrap header-grid">
         <Brand ctx={ctx} />
@@ -71,9 +70,10 @@ function SectionHeading({ label, title, intro, action }: { label: string; title:
   </div>;
 }
 
-function Services({ ctx }: { ctx: Context }) {
+function Services({ ctx, featured = false }: { ctx: Context; featured?: boolean }) {
+  const visibleServices = featured ? services.slice(0, 3) : services;
   return <div className="service-grid">
-    {services.map((service, index) => {
+    {visibleServices.map((service, index) => {
       const Icon = serviceIcons[service.id as keyof typeof serviceIcons] || Hammer;
       const text = service.text[ctx.lang];
       return <article className="service-card" key={service.id}>
@@ -97,7 +97,7 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
       const service = services.find((item) => item.id === project.serviceId);
       const cover = project.photos[0];
       if (!cover) return null;
-      return <article className={portfolio && index === 0 ? 'project-card project-featured' : 'project-card'} key={project.id}>
+      return <article className={index === 0 ? 'project-card project-featured' : 'project-card'} key={project.id}>
         <a className="project-cover" data-gallery-photo href={ctx.media('portfolio/' + cover.file)} aria-label={t.viewPhoto + ' · ' + text.title}>
           <img src={ctx.media('portfolio/' + cover.file)} alt={cover.alt[ctx.lang]} width={cover.width} height={cover.height} loading="lazy" decoding="async" />
         </a>
@@ -114,6 +114,7 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
               <a className="text-link" href={ctx.url(service)}>{t.relatedWork}<ArrowUpRight size={16} /></a>
               <a className="text-link" href={ctx.url('contact') + '?service=' + service.id + '#quote'}>{t.similarProject}<ArrowRight size={16} /></a>
             </div>}
+            {!portfolio && <a className="project-portfolio-link text-link" href={ctx.url('works')}>{t.allWorks}<ArrowUpRight size={16} /></a>}
           </div>
         </div>
         {portfolio && project.photos.length > 1 && <details className="project-gallery">
@@ -123,7 +124,6 @@ function Gallery({ ctx, portfolio = false }: { ctx: Context; portfolio?: boolean
               <img src={ctx.media('portfolio/' + photo.file)} alt={photo.alt[ctx.lang]} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
             </a>)}</div>
         </details>}
-        {!portfolio && <a className="project-portfolio-link text-link" href={ctx.url('works')}>{t.allWorks}<ArrowUpRight size={16} /></a>}
       </article>;
     })}
   </div>;
@@ -247,7 +247,17 @@ function Contact({ ctx, page = false }: { ctx: Context; page?: boolean }) {
         </div>
         <Details ctx={ctx} />
       </div>
-      <QuoteForm ctx={ctx} />
+      {formEndpoint ? <QuoteForm ctx={ctx} /> : <div className="contact-card">
+        <p className="kicker">{company.name}</p>
+        <h2>{t.contactGuide}</h2>
+        <ol className="contact-checklist">{t.contactChecklist.map((item, index) =>
+          <li key={item}><span>0{index + 1}</span>{item}</li>)}</ol>
+        {whatsapp && <a className="btn btn-whatsapp" href={whatsapp}><MessageCircle size={19} />{t.whatsapp}<ArrowUpRight size={17} /></a>}
+        <details className="request-fields">
+          <summary>{t.form.title}<ArrowDown size={17} /></summary>
+          <QuoteForm ctx={ctx} />
+        </details>
+      </div>}
     </div>
   </section>;
 }
@@ -256,31 +266,43 @@ function Home({ ctx }: { ctx: Context }) {
   const { t } = ctx;
   return <>
     <section className="hero">
-      <picture className="hero-photo">
-        <source media="(max-width: 650px)" srcSet={ctx.media(company.hero.mobile || company.hero.image)} />
-        <img src={ctx.media(company.hero.image)} alt={t.heroAlt} width={company.hero.width} height={company.hero.height} fetchPriority="high" />
-      </picture>
-      <div className="hero-shade"></div>
-      <div className="wrap hero-content">
-        <p className="kicker">{t.homeHero[2]}</p>
-        <h1>{t.homeHero[0]}</h1>
-        <p className="hero-lead">{t.homeHero[1]}</p>
-        <div className="hero-actions">
-          <a className="btn" href={ctx.url('contact') + '#quote'}>{t.quote}<ArrowUpRight size={19} /></a>
-          {phone ? <a className="btn btn-outline" href={phone}><Phone size={17} />{t.call}</a>
-            : <a className="btn btn-outline" href={ctx.url('works')}>{t.allWorks}<ArrowRight size={17} /></a>}
+      <div className="wrap">
+        <div className="hero-heading">
+          <div className="hero-title"><p className="kicker">{company.name} · {t.country}</p><h1>{t.homeHero[0]}</h1></div>
+          <div className="hero-summary">
+            <p className="hero-lead">{t.homeHero[1]}</p>
+            <div className="hero-actions">
+              <a className="btn" href={ctx.url('contact') + '#quote'}>{t.quote}<ArrowUpRight size={19} /></a>
+              {phone ? <a className="hero-phone" href={phone}><Phone size={16} />{company.phone}</a>
+                : <a className="text-link" href={ctx.url('works')}>{t.allWorks}<ArrowRight size={17} /></a>}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="wrap hero-foot">
-        <a href="#services" aria-label={t.section.services}><ArrowDown size={20} /></a>
-        {company.hero.demo && <span>{t.imageNote}</span>}
+        <div className="hero-visual">
+          <picture className="hero-photo">
+            <source media="(max-width: 650px)" srcSet={ctx.media(company.hero.mobile || company.hero.image)} />
+            <img src={ctx.media(company.hero.image)} alt={t.heroAlt} width={company.hero.width} height={company.hero.height} fetchPriority="high" />
+          </picture>
+          {projects[0] && <a className="hero-project" href={ctx.url('works')}>
+            <span>{projects[0].text[ctx.lang].category}<strong>{projects[0].text[ctx.lang].title}</strong></span><ArrowUpRight size={23} />
+          </a>}
+          {company.hero.demo && <span className="hero-image-note">{t.imageNote}</span>}
+        </div>
+        <div className="hero-foot">
+          <span>{t.homeHero[2]}</span>
+          <a href="#services">{t.allServices}<ArrowDown size={17} /></a>
+        </div>
       </div>
     </section>
     <section id="services" className="section services-section">
       <div className="wrap">
-        <SectionHeading label={t.section.services} title={t.pages.services[1]} intro={company.preview ? t.serviceNote : undefined}
+        <SectionHeading label={t.section.services} title={t.pages.services[1]}
           action={<a className="text-link" href={ctx.url('services')}>{t.allServices}<ArrowUpRight size={17} /></a>} />
-        <Services ctx={ctx} />
+        <Services ctx={ctx} featured />
+        {services.length > 3 && <nav className="secondary-services" aria-label={t.moreServices}>
+          <p>{t.moreServices}</p>
+          <div>{services.slice(3).map((service) => <a key={service.id} href={ctx.url(service)}>{service.text[ctx.lang].title}<ArrowUpRight size={16} /></a>)}</div>
+        </nav>}
       </div>
     </section>
     <FacadeFeature ctx={ctx} />
@@ -350,7 +372,7 @@ function PageBody({ ctx }: { ctx: Context }) {
   return <>
     <PageHeading ctx={ctx} label={route === 'about' ? title : label} title={route === 'about' ? company.name || title : title} description={route === 'services' ? t.overview : description} />
     {route === 'services' && <section className="section wrap" aria-label={t.allServices}>
-      {company.preview && <p className="provisional">{t.serviceNote}</p>}<Services ctx={ctx} />
+      <Services ctx={ctx} />
     </section>}
     {route === 'works' && <section className="section wrap" aria-label={t.section.works}>
       <Gallery ctx={ctx} portfolio />
@@ -381,7 +403,7 @@ function Footer({ ctx }: { ctx: Context }) {
       <nav aria-label={t.nav}><NavLinks ctx={ctx} /></nav>
       <Details ctx={ctx} compact />
     </div>
-    <div className="wrap footer-bottom"><span>© {company.name || t.brand}</span><a href={ctx.url('privacy')}>{t.pages.privacy[1]}</a></div>
+    <div className="wrap footer-bottom"><span>© {company.name || t.brand}{company.preview && <small> · {t.preview}</small>}</span><a href={ctx.url('privacy')}>{t.pages.privacy[1]}</a></div>
   </footer>;
 }
 

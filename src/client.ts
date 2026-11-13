@@ -45,6 +45,10 @@ if (viewer && viewerImage && viewerCaption) {
 
 const form = document.querySelector<HTMLFormElement>('.quote-form');
 if (form) {
+  if (location.hash === '#quote') {
+    const details = form.closest<HTMLDetailsElement>('.request-fields');
+    if (details) details.open = true;
+  }
   const requestedService = new URLSearchParams(location.search).get('service');
   const work = form.querySelector<HTMLSelectElement>('select[name=work]');
   const requestedOption = work && Array.from(work.options).find((option) => option.dataset.serviceId === requestedService);

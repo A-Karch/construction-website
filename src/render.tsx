@@ -68,7 +68,7 @@ function render(lang: Language, route: Route, settings: BuildSettings, root = fa
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#202420" />
+        <meta name="theme-color" content="#1b2520" />
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow'} />

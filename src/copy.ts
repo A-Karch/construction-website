@@ -5,9 +5,9 @@ type PageText = [slug: string, title: string, description: string];
 type Copy = {
   pages: Record<'home' | 'services' | 'works' | 'about' | 'contact' | 'privacy' | 'missing', PageText>;
   brand: string;
+  country: string;
   sector: string;
   preview: string;
-  previewText: string;
   skip: string;
   nav: string;
   language: string;
@@ -16,7 +16,10 @@ type Copy = {
   call: string;
   learn: string;
   allServices: string;
+  moreServices: string;
   allWorks: string;
+  contactGuide: string;
+  contactChecklist: string[];
   whatsapp: string;
   photos: string;
   viewPhoto: string;
@@ -69,9 +72,9 @@ export const copy: Localized<Copy> = {
       missing: ['404', 'Lehte ei leitud', 'Valitud leht puudub. Mine avalehele või vaata ehitusteenuseid.'],
     },
     brand: 'Ehitusettevõte',
+    country: 'Eesti',
     sector: 'EHITUS JA RENOVEERIMINE',
     preview: 'Demo',
-    previewText: 'Veebilehe eelvaade.',
     skip: 'Liigu põhisisu juurde',
     nav: 'Põhinavigatsioon',
     language: 'Keel',
@@ -80,6 +83,9 @@ export const copy: Localized<Copy> = {
     call: 'Helista meile',
     learn: 'Vaata lähemalt',
     allServices: 'Kõik teenused',
+    moreServices: 'Teised töösuunad',
+    contactGuide: 'Mida sõnumisse lisada',
+    contactChecklist: ['Objekti asukoht ja ligikaudne pindala', 'Soovitud tööd ja olemasoleva pinna seisukord', 'Sobiv aeg alustamiseks'],
     allWorks: 'Vaata projekte',
     whatsapp: 'Kirjuta WhatsAppis',
     photos: 'fotot',
@@ -153,9 +159,9 @@ export const copy: Localized<Copy> = {
       missing: ['404', 'Страница не найдена', 'Откройте главную страницу или список строительных услуг.'],
     },
     brand: 'Строительная компания',
+    country: 'Эстония',
     sector: 'СТРОИТЕЛЬСТВО И РЕМОНТ',
     preview: 'Демо',
-    previewText: 'Предпросмотр сайта.',
     skip: 'Перейти к содержанию',
     nav: 'Основная навигация',
     language: 'Язык',
@@ -164,6 +170,9 @@ export const copy: Localized<Copy> = {
     call: 'Позвонить нам',
     learn: 'Подробнее',
     allServices: 'Все услуги',
+    moreServices: 'Другие направления',
+    contactGuide: 'Что написать в сообщении',
+    contactChecklist: ['Расположение объекта и примерная площадь', 'Нужные работы и состояние поверхностей', 'Желаемые сроки начала работ'],
     allWorks: 'Смотреть проекты',
     whatsapp: 'Написать в WhatsApp',
     photos: 'фото',
@@ -237,9 +246,9 @@ export const copy: Localized<Copy> = {
       missing: ['404', 'Page not found', 'Return to the homepage or browse construction services.'],
     },
     brand: 'Construction Company',
+    country: 'Estonia',
     sector: 'CONSTRUCTION & RENOVATION',
     preview: 'Demo',
-    previewText: 'Website preview.',
     skip: 'Skip to content',
     nav: 'Main navigation',
     language: 'Language',
@@ -248,6 +257,9 @@ export const copy: Localized<Copy> = {
     call: 'Call us',
     learn: 'Learn more',
     allServices: 'All services',
+    moreServices: 'Other areas of work',
+    contactGuide: 'What to include in your message',
+    contactChecklist: ['Location and approximate area', 'Work required and existing surfaces', 'Your preferred start date'],
     allWorks: 'View projects',
     whatsapp: 'Chat on WhatsApp',
     photos: 'photos',
